@@ -42,8 +42,7 @@ class CreateCustomersTable extends Migration
             $table->timestamp('created_at')->useCurrent()->comment('作成日時');
             $table->timestamp('updated_at')->useCurrent()->comment('更新日時');
 
-            //プライマリーキー設定
-            //$table->primary('id');
+
         });
     }
 
