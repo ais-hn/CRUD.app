@@ -14,5 +14,7 @@
 use App\Http\Controllers\CustomersController;
 
 //indexファイルの表示
-Route::get('/','CustomersController@index');
-
+Route::get('/','CustomersController@index')->name('customers.index');
+Route::get('/create','CustomersController@create')->name('customers.create');
+Route::get('/detail','CustomersController@detail')->name('customers.detail');
+Route::get('/edit','CustomersController@edit')->name('customers.edit');

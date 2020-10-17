@@ -74,7 +74,7 @@ class PrefsTableSeeder extends Seeder
         ];
 
         //prefsテーブルに都道府県の初期データをセット
-            DB::table('$table')->insert($list);
+            DB::table($table)->insert($list);
     }
 }
 
