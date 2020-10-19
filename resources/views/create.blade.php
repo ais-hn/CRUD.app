@@ -18,11 +18,19 @@
     <main role="main">
         <div class="container-fluid" style="margin-top: 50px; padding-left: 100px;padding-right: 100px;">
             {{-- エラーメッセージ --}}
+            @if ($errors->any())
             <div class="alert alert-danger" role="alert">
-                【メッセージサンプル】エラーです。
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
+            @endif
             {{--POSTのため、@csrf指定--}}
-            <form id="form" method="post" action="{{ route('customers.index') }}">
+            <form id="form" method="post" action="{{ route('customers.store') }}">
                 @csrf
                 <div class="col-md-8 order-md-1">
                     <div class="row">
@@ -30,13 +38,13 @@
                         <div class="col-md-3 mb-3">
                             <label for="last_name">姓 <span class="badge badge-danger">必須</span></label>
                             <input type="text" class="form-control" name="last_name" placeholder="姓"
-                            maxlength='50' value="" required>
+                             value="{{ old('last_name') }}" required>
                         </div>
                         {{--名--}}
                         <div class="col-md-3 mb-3">
                             <label for="first_name">名 <span class="badge badge-danger">必須</span></label>
                             <input type="text" class="form-control" name="first_name" placeholder="名"
-                            maxlength='50' value="" required>
+                             value="{{ old('first_name') }}" required>
                         </div>
                     </div>
 
@@ -45,13 +53,13 @@
                         <div class="col-md-3 mb-3">
                             <label for="last_kana">姓かな <span class="badge badge-danger">必須</span></label>
                             <input type="text" class="form-control" name="last_kana" placeholder="姓かな"
-                            maxlength='50' value="" required>
+                             value="{{ old('last_kana') }}" required>
                         </div>
                         <div class="col-md-3 mb-3">
                         {{--名かな--}}
                             <label for="first_kana">名かな <span class="badge badge-danger">必須</span></label>
                             <input type="text" class="form-control" name="first_kana" placeholder="名かな"
-                            maxlength='50' value="" required>
+                             value="{{ old('first_kana') }}" required>
                         </div>
                     </div>
 
@@ -78,7 +86,7 @@
                         {{--生年月日--}}
                         <div class="col-md-3 mb-3">
                             <label for="birthday">生年月日 <span class="badge badge-danger">必須</span></label>
-                            <input type="date" class="form-control" name="birthday" placeholder="生年月日" value="" required>
+                            <input type="date" class="form-control" name="birthday" placeholder="生年月日" value="{{ old('birthday') }}" required>
                         </div>
                     </div>
 
@@ -86,18 +94,19 @@
                         {{--郵便番号--}}
                         <div class="col-md-2 mb-3">
                             <label for="postCode">郵便番号 <span class="badge badge-danger">必須</span></label>
-                            <input type="text" class="form-control" name="post_code" placeholder="郵便番号" value="" required>
+                            <input type="text" class="form-control" name="post_code" placeholder="郵便番号" value="{{ old('post_code') }}" required>
                         </div>
                     </div>
 
                     <div class="row">
                         {{--都道府県--}}
                         <div class="col-md-2 mb-3">
-                            <label for="prefId">都道府県 <span class="badge badge-danger">必須</span></label>
+                            <label for="pref_id">都道府県 <span class="badge badge-danger">必須</span></label>
                             <select class="custom-select d-block w-100" name="pref_id" required>
-                                <option value=""></option>
-                                <option value="1">北海道</option>
-                                <option value="2">青森県</option>
+                                @foreach($prefs as $pref)
+                                <option value="{{ $pref->id }}"> {{ $pref->name }} </option>
+                                @endforeach
+
                             </select>
                         </div>
                     </div>
@@ -107,7 +116,7 @@
                         <div class="col-md-5 mb-3">
                             <label for="address">住所 <span class="badge badge-danger">必須</span></label>
                             <input type="text" class="form-control" name="address" placeholder="渋谷区道玄坂2丁目11-1"
-                            maxlength='80' value="" required>
+                             value="{{ old('address') }}" required>
                         </div>
                     </div>
 
@@ -116,7 +125,7 @@
                         <div class="col-md-5 mb-3">
                             <label for="building">建物名</label>
                             <input type="text" class="form-control" name="building" placeholder="Ｇスクエア渋谷道玄坂 4F"
-                            maxlength='80' value="">
+                             value="{{ old('building') }}">
                         </div>
                     </div>
 
@@ -124,7 +133,7 @@
                         {{--電話番号--}}
                         <div class="col-md-3 mb-3">
                             <label for="tel">電話番号 <span class="badge badge-danger">必須</span></label>
-                            <input type="tel" class="form-control" name="tel" placeholder="03-1234-5678" value="" required>
+                            <input type="tel" class="form-control" name="tel" placeholder="03-1234-5678" value="{{ old('tel') }}" required>
                         </div>
                     </div>
 
@@ -132,7 +141,7 @@
                         {{--携帯番号--}}
                         <div class="col-md-3 mb-3">
                             <label for="mobile">携帯番号 <span class="badge badge-danger">必須</span></label>
-                            <input type="tel" class="form-control" name="mobile" placeholder="080-1234-5678" value="" required>
+                            <input type="tel" class="form-control" name="mobile" placeholder="080-1234-5678" value="{{ old('mobile') }}" required>
                         </div>
                     </div>
 
@@ -141,7 +150,7 @@
                         <div class="col-md-3 mb-3">
                             <label for="email">メールアドレス <span class="badge badge-danger">必須</span></label>
                             <input type="email" class="form-control" name="email" placeholder="you@example.com"
-                            maxlength='80' value="" required>
+                             value="{{ old('email') }}" required>
                         </div>
                     </div>
 
@@ -179,9 +188,16 @@
 
         function completeConfirm(response){
             notScreenRelease = true;
+
             var buttons = {};
-            buttons['キャンセル'] = function(){$(this).dialog('close');response(false)};
-            buttons['登録'] = function(){$(this).dialog('close');response(true)};
+            buttons['キャンセル'] = function(){
+                $(this).dialog('close');
+                response(false)
+            };
+            buttons['登録'] = function(){
+                $(this).dialog('close');
+                response(true)
+            };
 
             $("#complete-confirm").dialog({
                 show: {
