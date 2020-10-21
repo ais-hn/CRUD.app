@@ -18,9 +18,11 @@
         <div class="py-5 text-center">
 
             {{--登録完了メッセージ--}}
+            @if(session('signup_message'))
             <div class="alert alert-success" role="alert">
-                【メッセージサンプル】登録しました。
+                {{ session('signup_message') }}
             </div>
+            @endif
 
             <div style="margin-bottom:20px;">
 
@@ -65,9 +67,9 @@
                                 <label for="prefId" class="col-sm-2 col-form-label">都道府県</label>
                                 <div class="col-sm-3">
                                     <select class="custom-select d-block" name="pref_id">
-                                        <option value=""></option>
-                                        <option value="1">北海道</option>
-                                        <option value="2">青森県</option>
+                                        @foreach($prefs as $pref)
+                                            <option value="{{ $pref->id }}"> {{ $pref->name }} </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -118,46 +120,31 @@
                             {{--ID--}}
                             <td scope="col">{{ $customer->id}}</td>
                             {{--姓 名--}}
-                            <td scope="col"><a href="{{ route('customers.detail') }}">{{$customers->last_name}} {{$customers->first_name}}</a></td>
+                            <td scope="col"><a href="{{ route('customers.detail',['id'=>$customer->id]) }} ">{{$customer->last_name}} {{$customer->first_name}}</a></td>
                             {{--せい めい--}}
-                            <td scope="col">{{$customers->last_kana}} {{first_kana}}</td>
+                            <td scope="col">{{$customer->last_kana}} {{$customer->first_kana}}</td>
                             {{--性別（男女未設定）--}}
-                            <td scope="col">{{$customers->gender}}</td>
+                            <td scope="col">{{$customer->gender}}</td>
                             {{--生年月日--}}
-                            <td scope="col">{{$customers->birthday}}</td>
+                            <td scope="col">{{$customer->birthday}}</td>
                             {{--郵便番号--}}
-                            <td scope="col">{{$customers->post_code}}</td>
+                            <td scope="col">{{$customer->post_code}}</td>
                             {{--都道府県--}}
-                            <td scope="col">{{$customers->pref_id}}</td>
+                            <td scope="col">{{$customer->pref_id}}</td>
                             {{--電話番号--}}
-                            <td scope="col">{{$customers->tel}}</td>
+                            <td scope="col">{{$customer->tel}}</td>
                             {{--携帯番号--}}
-                            <td scope="col">{{$customers->mobile}}</td>
+                            <td scope="col">{{$customer->mobile}}</td>
                             {{--メールアドレス--}}
-                            <td scope="col">{{$customers->email}}</td>
+                            <td scope="col">{{$customer->email}}</td>
                             {{--作成日時--}}
-                            <td scope="col">{{$customers->created_at}}</td>
+                            <td scope="col">{{$customer->created_at}}</td>
                             {{--更新日時--}}
-                            <td scope="col">{{$customers->update_at}}</td>
+                            <td scope="col">{{$customer->update_at}}</td>
                             {{--編集ボタン--}}
-                            <td scope="col"><a class="btn btn-info" href="{{ route('customer._edit') }}">編集</a></td>
+                            <td scope="col"><a class="btn btn-info" href="{{ route('customers.edit') }}">編集</a></td>
                         </tr>
                         @endforeach
-                        <tr>
-                            <td scope="col">1</td>
-                            <td scope="col"><a href="{{ route('customers.detail') }}">苗字　名前</a></td>
-                            <td scope="col">みょうじ なまえ</td>
-                            <td scope="col">男</td>
-                            <td scope="col">1973/01/24</td>
-                            <td scope="col">123-4567</td>
-                            <td scope="col">青森県</td>
-                            <td scope="col">03-1234-5678</td>
-                            <td scope="col">080-1234-5678</td>
-                            <td scope="col">bobtabo.buhibuhi@gmail.com</td>
-                            <td scope="col">2020/08/30　23：12：34</td>
-                            <td scope="col">2020/08/30　23：12：34</td>
-                            <td scope="col"><a class="btn btn-info" href="edit.html">編集</a></td>
-                        </tr>
 
                     </tbody>
                 </table>
