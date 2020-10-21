@@ -29,7 +29,7 @@ class CustomerRequest extends FormRequest
                 'last_kana' => 'required|max:50',
                 'first_kana' => 'required|max:50',
                 'gender' => 'required',
-                'birthday' => 'required',
+                'birthday' => 'required|date',
                 'pref_id' => 'required',
                 'address' => 'required|max:80','regex:/^[0-9]{3}-[0-9]{4}$/',
                 'buildding' => 'max:80',

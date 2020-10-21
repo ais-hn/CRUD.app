@@ -47,7 +47,8 @@
                         {{--性別--}}
                         <div class="col-md-3 mb-3">
                             <label for="gender">性別</label>
-                            <input type="text" class="form-control" name="gender" value="{{ $customers->gender }}" readonly>
+                            <input type="text" class="form-control" name="gender"
+                            value="@if($customers->gender === 1)男 @else 女 @endif" readonly>
                         </div>
                     </div>
 
@@ -55,7 +56,7 @@
                         {{--生年月日--}}
                         <div class="col-md-3 mb-3">
                             <label for="birthday">生年月日</label>
-                            <input type="date" class="form-control" name="birthday" placeholder="" value="{{ $customers->birthday }}" readonly>
+                            <input type="date" class="form-control" name="birthday" placeholder="" value="{{ $customers->birthday->format('yyyy/mm/dd') }}" readonly>
                         </div>
                     </div>
 
@@ -142,7 +143,7 @@
             $("#complete").click(function() {
                 completeConfirm(function(result){
                     if (result) {
-                        location.replace("{{ route('customers.index') }}");
+                        location.replace("{{ route('customers.destroy',['id'=>$customers->id]) }}");
                     }
                 });
             });

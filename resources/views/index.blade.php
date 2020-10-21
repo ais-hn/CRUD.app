@@ -124,13 +124,19 @@
                             {{--せい めい--}}
                             <td scope="col">{{$customer->last_kana}} {{$customer->first_kana}}</td>
                             {{--性別（男女未設定）--}}
-                            <td scope="col">{{$customer->gender}}</td>
+                            <td scope="col">
+                                @if($customer->gender === 1)
+                                男
+                                @else
+                                女
+                                @endif
+                            </td>
                             {{--生年月日--}}
                             <td scope="col">{{$customer->birthday}}</td>
                             {{--郵便番号--}}
                             <td scope="col">{{$customer->post_code}}</td>
                             {{--都道府県--}}
-                            <td scope="col">{{$customer->pref_id}}</td>
+                            <td scope="col">{{$customer->pref->name}}</td>
                             {{--電話番号--}}
                             <td scope="col">{{$customer->tel}}</td>
                             {{--携帯番号--}}

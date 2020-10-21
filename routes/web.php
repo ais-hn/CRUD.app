@@ -32,4 +32,4 @@ Route::get('/edit','CustomersController@edit')->name('customers.edit');
 Route::patch('/{id}', 'CustomersController@update')->name('cutomers.update');
 
 //detailファイルからの削除
-Route::delete('/{id}', 'CustomersController@destroy')->name('customres.destroy');
+Route::delete('/{id}', 'CustomersController@destroy')->name('customers.destroy');

@@ -14,6 +14,7 @@ class CustomersController extends Controller
     public function index(){
         //customersテーブルのデータを全取得
         $customers = Customer::all();
+
         //prefsテーブルのデータを全取得
         $prefs = Pref::all();
 
@@ -32,7 +33,7 @@ class CustomersController extends Controller
     public function destroy($id){
         $customers = Customer::findOrFail($id);
 
-        $customers->delete();
+        $customers->delete();;
     }
 
     public function create(){
