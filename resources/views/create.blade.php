@@ -70,12 +70,12 @@
                             <div class="col-sm-10 text-left">
                                 {{--男--}}
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" value="1">
+                                    <input class="form-check-input" type="radio" name="gender" value="1" {{ old('gender') == 1 ? 'checked' : ''}}>
                                     <label class="form-check-label" for="inlineCheckbox1">男</label>
                                 </div>
                                 {{--女--}}
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" value="2">
+                                    <input class="form-check-input" type="radio" name="gender" value="2" {{ old('gender') == 2 ? 'checked' : ''}}>
                                     <label class="form-check-label" for="inlineCheckbox2">女</label>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
                             <label for="pref_id">都道府県 <span class="badge badge-danger">必須</span></label>
                             <select class="custom-select d-block w-100" name="pref_id" required>
                                 @foreach($prefs as $pref)
-                                <option value="{{ $pref->id }}"> {{ $pref->name }} </option>
+                                <option value="{{ old($pref->id) }}"> {{ old($pref->name) }} </option>
                                 @endforeach
 
                             </select>

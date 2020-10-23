@@ -123,19 +123,13 @@
                             <td scope="col"><a href="{{ route('customers.detail',['id'=>$customer->id]) }} ">{{$customer->last_name}} {{$customer->first_name}}</a></td>
                             {{--せい めい--}}
                             <td scope="col">{{$customer->last_kana}} {{$customer->first_kana}}</td>
-                            {{--性別（男女未設定）--}}
-                            <td scope="col">
-                                @if($customer->gender === 1)
-                                男
-                                @else
-                                女
-                                @endif
-                            </td>
+                            {{--性別--}}
+                            <td scope="col">{{$customer->gender == 1 ? '男':'女'}}</td>
                             {{--生年月日--}}
-                            <td scope="col">{{$customer->birthday}}</td>
+                            <td scope="col">{{$customer->birthday->format('yy-m-d')}}</td>
                             {{--郵便番号--}}
                             <td scope="col">{{$customer->post_code}}</td>
-                            {{--都道府県--}}
+                            {{--都道府県 モデルでPrefと繋いでる(prefのfunction)--}}
                             <td scope="col">{{$customer->pref->name}}</td>
                             {{--電話番号--}}
                             <td scope="col">{{$customer->tel}}</td>
@@ -148,7 +142,7 @@
                             {{--更新日時--}}
                             <td scope="col">{{$customer->update_at}}</td>
                             {{--編集ボタン--}}
-                            <td scope="col"><a class="btn btn-info" href="{{ route('customers.edit') }}">編集</a></td>
+                            <td scope="col"><a class="btn btn-info" href="{{ route('customers.edit',['id'=>$customer->id]) }}">編集</a></td>
                         </tr>
                         @endforeach
 

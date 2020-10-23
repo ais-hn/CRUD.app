@@ -26,10 +26,10 @@ Route::get('/{id}','CustomersController@detail')->name('customers.detail');
 Route::post('/store', 'CustomersController@store')->name('customers.store');
 
 //editファイルの(顧客編集)の表示
-Route::get('/edit','CustomersController@edit')->name('customers.edit');
+Route::get('/{id}/edit','CustomersController@edit')->name('customers.edit');
 
 //editファイルの更新送信先
 Route::patch('/{id}', 'CustomersController@update')->name('cutomers.update');
 
 //detailファイルからの削除
-Route::delete('/{id}', 'CustomersController@destroy')->name('customers.destroy');
+Route::get('/destoroy/{id}', 'CustomersController@destroy')->name('customers.destroy');

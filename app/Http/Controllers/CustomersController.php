@@ -33,7 +33,9 @@ class CustomersController extends Controller
     public function destroy($id){
         $customers = Customer::findOrFail($id);
 
-        $customers->delete();;
+        $customers->delete();
+
+        return redirect()->route('customers.index');
     }
 
     public function create(){
@@ -58,25 +60,21 @@ class CustomersController extends Controller
 
     }
 
-    public function edit(){
+    public function edit($id){
+        $customers = Customer::findOrFail($id);
+        $prefs = Pref::all();
 
-        return view('edit');
+
+        return view('edit', compact('customers', 'prefs'));
     }
 
     //update時のformの値を取得
     public function update(CustomerRequest $request, $id){
         $customers = Customer::findOrFail($id);
-        //formの値を取得
-        $input = $request->input();
-        //トークンを消す
-        unset($input['_token']);
 
-        DB::transaction(function () use ($input) {
-        $customer = new Customer();
-        $customer->fill($input)->save();
-        });
+        $customers->update($request->validated());
 
-        return redirect()->route('customers.detail');
+        return redirect()->route('customers.index');
 
 
     }
