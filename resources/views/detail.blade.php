@@ -48,7 +48,7 @@
                         <div class="col-md-3 mb-3">
                             <label for="gender">性別</label>
                             <input type="text" class="form-control" name="gender"
-                            value="{{ $customers->gender == 1 ? '男' : '女' }}" readonly>
+                            value="{{ ($customers->gender) == 1 ? '男' : '女' }}" readonly>
                         </div>
                     </div>
 

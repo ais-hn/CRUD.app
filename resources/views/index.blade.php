@@ -124,7 +124,7 @@
                             {{--せい めい--}}
                             <td scope="col">{{$customer->last_kana}} {{$customer->first_kana}}</td>
                             {{--性別--}}
-                            <td scope="col">{{$customer->gender == 1 ? '男':'女'}}</td>
+                            <td scope="col">{{ ($customer->gender) == 1 ? '男':'女'}}</td>
                             {{--生年月日--}}
                             <td scope="col">{{$customer->birthday->format('yy-m-d')}}</td>
                             {{--郵便番号--}}

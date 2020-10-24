@@ -104,8 +104,8 @@
                             <label for="pref_id">都道府県 <span class="badge badge-danger">必須</span></label>
                             <select class="custom-select d-block w-100" name="pref_id" required>
                                 @foreach($prefs as $pref)
-                                <option value="{{ $pref->id }}">
-                                    {{ old($pref->name,$customers->pref->name) }} </option>
+                                <option value="{{ $pref->id }}" {{ ($pref->id == old('pref_id', $customers->pref_id )) ? "selected" : ""}} >
+                                    {{ $pref->name }} </option>
                                 @endforeach
 
                             </select>
@@ -159,7 +159,7 @@
                         {{--備考--}}
                         <div class="col-md-8 mb-3">
                             <label for="remarks">備考</label>
-                            <textarea class="form-control" aria-label="With textarea" name="remarks">{{$customers->remarks}}</textarea>
+                            <textarea class="form-control" aria-label="With textarea" name="remarks">{{ old('remarks',$customers->remarks) }}</textarea>
                         </div>
                     </div>
                 </div>
