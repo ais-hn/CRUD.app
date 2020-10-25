@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Customer;
 use App\Pref;
 use App\Http\Requests\CustomerRequest;
+use App\Http\Requests\CustomerUpdateRequest;
 use DB;
 
 
@@ -69,10 +70,17 @@ class CustomersController extends Controller
     }
 
     //update時のformの値を取得
-    public function update(CustomerRequest $request, $id){
-        $customers = Customer::findOrFail($id);
+    public function update(CustomerUpdateRequest $request){
 
-        $customers->update($request->validated());
+        //formの値を取得
+        $input = $request->input();
+        //トークンを消す
+        unset($input['_token']);
+
+        DB::transaction(function () use ($input) {
+        $customer = Customer::findOrFail($input['id']);
+        $customer->fill($input)->save();
+        });
 
         return redirect()->route('customers.index');
 

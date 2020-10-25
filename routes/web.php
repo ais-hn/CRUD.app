@@ -29,7 +29,7 @@ Route::post('/store', 'CustomersController@store')->name('customers.store');
 Route::get('/{id}/edit','CustomersController@edit')->name('customers.edit');
 
 //editファイルの更新送信先
-Route::patch('/{id}', 'CustomersController@update')->name('cutomers.update');
+Route::post('/update', 'CustomersController@update')->name('customers.update');
 
 //detailファイルからの削除
 Route::get('/destoroy/{id}', 'CustomersController@destroy')->name('customers.destroy');

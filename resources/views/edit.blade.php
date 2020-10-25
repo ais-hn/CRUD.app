@@ -28,10 +28,14 @@
             </div>
             @endif
 
-            {{--PUTCHで更新--}}
-            <form id="form" method="post" action="{{ route('cutomers.update',[$customers->id]) }}">
-                @method('PATCH')
+            {{--POSTで更新--}}
+            <form id="form" method="post" action="{{ route('customers.update') }}">
                 @csrf
+
+
+                {{--hiddenで更新時はidも送る--}}
+                <input type="hidden" name="id" value="{{ $customers->id }}" />
+
                 <div class="col-md-8 order-md-1">
                     <div class="row">
                         {{--姓--}}
