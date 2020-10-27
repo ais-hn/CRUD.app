@@ -27,7 +27,8 @@
             <div style="margin-bottom:20px;">
 
                 {{--検索項目フォーム--}}
-                <form id="form" method="post" action="index.html">
+                <form id="form" method="get" action="{{ route('customers.serch') }}">
+
                     <div class="row">
                         <div class="col-md-6">
 
@@ -35,7 +36,7 @@
                             <div class="form-group row">
                                 <label for="lastKana" class="col-sm-2 col-form-label">姓かな</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="last_kana" placeholder="姓かな">
+                                    <input type="text" class="form-control" name="last_kana" placeholder="姓かな" value="{{ old('last_kana') }}">
                                 </div>
                             </div>
 
@@ -43,7 +44,7 @@
                             <div class="form-group row">
                                 <label for="firstKana" class="col-sm-2 col-form-label">名かな</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="first_kana" placeholder="名かな">
+                                    <input type="text" class="form-control" name="first_kana" placeholder="名かな" value="{{ old('first_kana') }}">
                                 </div>
                             </div>
 
@@ -52,11 +53,11 @@
                                 <label for="firstName" class="col-sm-2 col-form-label">性別</label>
                                 <div class="col-sm-10 text-left">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="gender1" value="1">
+                                        <input class="form-check-input" type="checkbox" name="gender" value="1" {{ old('gender') == 1 ? 'checked' : ''}} >
                                         <label class="form-check-label" for="inlineCheckbox1">男</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="gender2" value="2">
+                                        <input class="form-check-input" type="checkbox" name="gender" value="2" {{ old('gender') == 2 ? 'checked' : ''}} >
                                         <label class="form-check-label" for="inlineCheckbox2">女</label>
                                     </div>
                                 </div>
@@ -67,8 +68,9 @@
                                 <label for="prefId" class="col-sm-2 col-form-label">都道府県</label>
                                 <div class="col-sm-3">
                                     <select class="custom-select d-block" name="pref_id">
+                                        <option value=""></option>
                                         @foreach($prefs as $pref)
-                                            <option value="{{ $pref->id }}"> {{ $pref->name }} </option>
+                                            <option value="{{ $pref->id }}" {{ ($pref->id == old('pref_id')) ? "selected" : "" }}> {{ $pref->name }} </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -82,10 +84,12 @@
                     <button type="button" id="search" class="btn btn-primary" style="width:150px"><i class="fas fa-search pr-1"></i> 検索</button>
                 </div>
 
-                {{--エラーメッセージ--}}
+                {{--検索エラーメッセージ--}}
+                @if (session('no_serch_message'))
                 <div class="alert alert-warning" role="alert">
-                    【メッセージサンプル】該当データが見つかりません。
+                    {{ session('no_serch_message') }}
                 </div>
+                @endif
 
                 {{--新規登録ボタン--}}
                 <div class="form-group row">
@@ -93,7 +97,7 @@
                 </div>
 
             </div>
-
+            @if(isset($customers))
             <div class="row">
                 <table class="table table-bordered table-hover">
                     {{--テーブルの各カラム項目--}}
@@ -149,6 +153,7 @@
                     </tbody>
                 </table>
             </div>
+            @endif
         </div>
     </div>
 </main>

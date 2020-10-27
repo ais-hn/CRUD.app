@@ -16,6 +16,9 @@ use App\Http\Controllers\CustomersController;
 //indexファイル(検索一覧)の表示
 Route::get('/','CustomersController@index')->name('customers.index');
 
+//indexファイルから検索処理
+Route::get('/serch','CustomersController@serch')->name('customers.serch');
+
 //createファイル(顧客作成)の表示
 Route::get('/create','CustomersController@create')->name('customers.create');
 
