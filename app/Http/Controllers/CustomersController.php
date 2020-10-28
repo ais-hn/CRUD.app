@@ -34,7 +34,7 @@ class CustomersController extends Controller
 
         //検索リクエストを取得
         $serch = $request->input();
-        //クエリの取得
+        //クエリストリングスから取得
         $query = Customer::query();
 
 
@@ -45,10 +45,14 @@ class CustomersController extends Controller
         //条件2
         elseif(!empty($serch['last_kana']) && empty($serch['first_kana']) && empty($serch['gender']) && empty($serch['pref_id'])) {
             $customers = $query->where('last_kana','like', '%'.$serch['last_kana'].'%')->get();
-            if($customers != Customer::all()){
-                return redirect()->route('customers.index')->with('no_serch_message','該当データが見つかりません。');
+            //比較する条件式
+            if(){
+                return view('index',compact('customers','prefs'));
+            } else{
+                $no_serch_message = 'データが見つかりません。';
+                return view('index',compact('customers','prefs','no_serch_message'));
             }
-            return view('index',compact('customers','prefs'));
+
         }
         //条件3
         elseif(!empty($serch['last_kana']) && !empty($serch['first_kana']) && empty($serch['gender']) && empty($serch['pref_id'])) {

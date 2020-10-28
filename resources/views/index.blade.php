@@ -85,9 +85,9 @@
                 </div>
 
                 {{--検索エラーメッセージ--}}
-                @if (session('no_serch_message'))
+                @if (isset($no_serch_message))
                 <div class="alert alert-warning" role="alert">
-                    {{ session('no_serch_message') }}
+                    {{ $no_serch_message }}
                 </div>
                 @endif
 
