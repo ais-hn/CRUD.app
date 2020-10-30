@@ -53,8 +53,8 @@ class CustomersController extends Controller
         }
 
         //条件3
-        if(!empty($serch['gender'])) {
-            $query->where('gender','like', $serch['gender']);
+        if(!empty($serch['gender1']) || !empty($serch['gender2']) ) {
+            $query->where('gender','like', $serch['gender1'])->orWhere('gender','like', $serch['gender2']);
         }
 
         //条件4
