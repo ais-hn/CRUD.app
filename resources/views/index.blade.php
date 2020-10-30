@@ -36,7 +36,7 @@
                             <div class="form-group row">
                                 <label for="lastKana" class="col-sm-2 col-form-label">姓かな</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="last_kana" placeholder="姓かな" value="{{ old('last_kana') }}">
+                                    <input type="text" class="form-control" name="last_kana" placeholder="姓かな" value="{{ $serch['last_kana'] }}">
                                 </div>
                             </div>
 
@@ -44,7 +44,7 @@
                             <div class="form-group row">
                                 <label for="firstKana" class="col-sm-2 col-form-label">名かな</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="first_kana" placeholder="名かな" value="{{ old('first_kana') }}">
+                                    <input type="text" class="form-control" name="first_kana" placeholder="名かな" value="{{ $serch['first_kana'] }}">
                                 </div>
                             </div>
 
@@ -53,11 +53,11 @@
                                 <label for="firstName" class="col-sm-2 col-form-label">性別</label>
                                 <div class="col-sm-10 text-left">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="gender" value="1" {{ old('gender') == 1 ? 'checked' : ''}} >
+                                        <input class="form-check-input" type="checkbox" name="gender" value="1" {{ $serch['gender'] == 1 ? 'checked' : ''}} >
                                         <label class="form-check-label" for="inlineCheckbox1">男</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="gender" value="2" {{ old('gender') == 2 ? 'checked' : ''}} >
+                                        <input class="form-check-input" type="checkbox" name="gender" value="2" {{ $serch['gender'] == 2 ? 'checked' : ''}}>
                                         <label class="form-check-label" for="inlineCheckbox2">女</label>
                                     </div>
                                 </div>
@@ -70,7 +70,7 @@
                                     <select class="custom-select d-block" name="pref_id">
                                         <option value=""></option>
                                         @foreach($prefs as $pref)
-                                            <option value="{{ $pref->id }}" {{ ($pref->id == old('pref_id')) ? "selected" : "" }}> {{ $pref->name }} </option>
+                                            <option value="{{ $pref->id }}" {{ ($pref->id == $serch['pref_id']) ? "selected" : ''}}> {{ $pref->name }} </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -85,9 +85,9 @@
                 </div>
 
                 {{--検索エラーメッセージ--}}
-                @if (isset($no_serch_message))
+                @if ( $customers->isEmpty() )
                 <div class="alert alert-warning" role="alert">
-                    {{ $no_serch_message }}
+                    該当データが見つかりません。
                 </div>
                 @endif
 
@@ -97,7 +97,7 @@
                 </div>
 
             </div>
-            @if(isset($customers))
+
             <div class="row">
                 <table class="table table-bordered table-hover">
                     {{--テーブルの各カラム項目--}}
@@ -153,7 +153,7 @@
                     </tbody>
                 </table>
             </div>
-            @endif
+
         </div>
     </div>
 </main>

@@ -20,7 +20,9 @@ class CustomersController extends Controller
         //prefsテーブルのデータを全取得
         $prefs = Pref::all();
 
-        return view('index', compact('customers','prefs'));
+        $serch = NULL;
+
+        return view('index', compact('customers','prefs','serch'));
 
 
     }
@@ -34,170 +36,35 @@ class CustomersController extends Controller
 
         //検索リクエストを取得
         $serch = $request->input();
-        //クエリストリングスから取得
+
+
+        //クエリ取得
         $query = Customer::query();
 
-
-        //条件1(全て空欄時)
-        if(empty($serch['last_kana']) && empty($serch['first_kana']) && empty($serch['gender']) && empty($serch['pref_id'])) {
-            return redirect()->route('customers.index');
+        //条件1
+        if(!empty($serch['last_kana']))  {
+            $query->where('last_kana','like', '%'.$serch['last_kana'].'%');
         }
+
         //条件2
-        elseif(!empty($serch['last_kana']) && empty($serch['first_kana']) && empty($serch['gender']) && empty($serch['pref_id'])) {
-            $customers = $query->where('last_kana','like', '%'.$serch['last_kana'].'%')->get();
-            //比較する条件式
-            if(){
-                return view('index',compact('customers','prefs'));
-            } else{
-                $no_serch_message = 'データが見つかりません。';
-                return view('index',compact('customers','prefs','no_serch_message'));
-            }
-
+        if(!empty($serch['first_kana'])) {
+            $query->where('first_kana','like', '%'.$serch['first_kana'].'%');
         }
+
         //条件3
-        elseif(!empty($serch['last_kana']) && !empty($serch['first_kana']) && empty($serch['gender']) && empty($serch['pref_id'])) {
-            $customers = $query->where('last_kana','like', '%'.$serch['last_kana'].'%')
-                               ->where('first_kana','like', '%'.$serch['first_kana'].'%')
-                               ->get();
-            if($customers != Customer::all()){
-                return view('index',compact('customers','prefs','no_serch_message'));
-            }
-            return view('index',compact('customers','prefs'));
-        }
-        //条件4
-        elseif(!empty($serch['last_kana']) && !empty($serch['first_kana']) && !empty($serch['gender']) && empty($serch['pref_id'])) {
-            $customers = $query->where('last_kana','like', '%'.$serch['last_kana'].'%')
-                               ->where('first_kana','like', '%'.$serch['first_kana'].'%')
-                               ->where('gender','like',$serch['gender'])
-                               ->get();
-             if($customers != Customer::all()){
-                 return view('index',compact('customers','prefs','no_serch_message'));
-            }
-            return view('index',compact('customers','prefs'));
-        }
-        //条件5
-        elseif(!empty($serch['last_kana']) && !empty($serch['first_kana']) && !empty($serch['gender']) && !empty($serch['pref_id'])) {
-            $customers = $query->where('last_kana','like', '%'.$serch['last_kana'].'%')
-                               ->where('first_kana','like', '%'.$serch['first_kana'].'%')
-                               ->where('gender','like',$serch['gender'])
-                               ->where('pref_id','like',$serch['pref_id'])
-                               ->get();
-            if($customers != Customer::all()){
-                  return view('index',compact('customers','prefs','no_serch_message'));
-            }
-            return view('index',compact('customers','prefs'));
-        }
-        //条件6
-        elseif(!empty($serch['last_kana']) && !empty($serch['first_kana']) && empty($serch['gender']) && !empty($serch['pref_id'])) {
-            $customers = $query->where('last_kana','like', '%'.$serch['last_kana'].'%')
-                               ->where('first_kana','like', '%'.$serch['first_kana'].'%')
-                               ->where('pref_id','like',$serch['pref_id'])
-                               ->get();
-                if($customers != Customer::all()){
-                     return view('index',compact('customers','prefs','no_serch_message'));
-                }
-            return view('index',compact('customers','prefs'));
-        }
-        //条件7
-        elseif(!empty($serch['last_kana']) && empty($serch['first_kana']) && !empty($serch['gender']) && empty($serch['pref_id'])) {
-            $customers = $query->where('last_kana','like', '%'.$serch['last_kana'].'%')
-                               ->where('gender','like',$serch['gender'])
-                               ->get();
-                if($customers != Customer::all()){
-                    return view('index',compact('customers','prefs','no_serch_message'));
-                }
-            return view('index',compact('customers','prefs'));
+        if(!empty($serch['gender'])) {
+            $query->where('gender','like', $serch['gender']);
         }
 
-        //条件8
-        elseif(!empty($serch['last_kana']) && empty($serch['first_kana']) && !empty($serch['gender']) && !empty($serch['pref_id'])) {
-            $customers = $query->where('last_kana','like', '%'.$serch['last_kana'].'%')
-                               ->where('gender','like',$serch['gender'])
-                               ->where('pref_id','like',$serch['pref_id'])
-                               ->get();
-                if($customers != Customer::all()){
-                    return view('index',compact('customers','prefs','no_serch_message'));
-                }
-            return view('index',compact('customers','prefs'));
+        //条件4
+        if(!empty($serch['pref_id'])) {
+            $query->where('pref_id','like', $serch['pref_id']);
         }
-        //条件9
-        elseif(!empty($serch['last_kana']) && empty($serch['first_kana']) && empty($serch['gender']) && !empty($serch['pref_id'])) {
-            $customers = $query->where('last_kana','like', '%'.$serch['last_kana'].'%')
-                               ->where('pref_id','like',$serch['pref_id'])
-                               ->get();
-                if($customers != Customer::all()){
-                    return view('index',compact('customers','prefs','no_serch_message'));
-                }
-            return view('index',compact('customers','prefs'));
-        }
-        //条件10
-        elseif(empty($serch['last_kana']) && !empty($serch['first_kana']) && empty($serch['gender']) && empty($serch['pref_id'])) {
-            $customers = $query->where('first_kana','like', '%'.$serch['first_kana'].'%')
-                               ->get();
-                if($customers != Customer::all()){
-                    return view('index',compact('customers','prefs','no_serch_message'));
-                }
-            return view('index',compact('customers','prefs'));
-        }
-        //条件11
-        elseif(empty($serch['last_kana']) && !empty($serch['first_kana']) && !empty($serch['gender']) && empty($serch['pref_id'])) {
-            $customers = $query->where('first_kana','like', '%'.$serch['first_kana'].'%')
-                               ->where('gender','like',$serch['gender'])
-                               ->get();
-                if($customers != Customer::all()){
-                    return view('index',compact('customers','prefs','no_serch_message'));
-                }
-            return view('index',compact('customers','prefs'));
-        }
-        //条件12
-        elseif(empty($serch['last_kana']) && !empty($serch['first_kana']) && !empty($serch['gender']) && !empty($serch['pref_id'])) {
-            $customers = $query->where('first_kana','like', '%'.$serch['first_kana'].'%')
-                               ->where('gender','like',$serch['gender'])
-                               ->where('pref_id','like',$serch['pref_id'])
-                               ->get();
-                if($customers != Customer::all()){
-                    return view('index',compact('customers','prefs','no_serch_message'));
-                }
-            return view('index',compact('customers','prefs'));
-        }
-        //条件13
-        elseif(empty($serch['last_kana']) && !empty($serch['first_kana']) && empty($serch['gender']) && !empty($serch['pref_id'])) {
-            $customers = $query->where('first_kana','like', '%'.$serch['first_kana'].'%')
-                               ->where('pref_id','like',$serch['pref_id'])
-                               ->get();
-                if($customers != Customer::all()){
-                    return view('index',compact('customers','prefs','no_serch_message'));
-                }
-            return view('index',compact('customers','prefs'));
-        }
-        //条件14
-        elseif(empty($serch['last_kana']) && empty($serch['first_kana']) && !empty($serch['gender']) && empty($serch['pref_id'])) {
-            $customers = $query->where('gender','like',$serch['gender'])
-                               ->get();
-                if($customers != Customer::all()){
-                    return view('index',compact('customers','prefs','no_serch_message'));
-                }
-            return view('index',compact('customers','prefs'));
-        }
-        //条件15
-        elseif(empty($serch['last_kana']) && empty($serch['first_kana']) && !empty($serch['gender']) && !empty($serch['pref_id'])) {
-            $customers = $query->where('gender','like',$serch['gender'])
-                               ->where('pref_id','like',$serch['pref_id'])
-                               ->get();
-                if($customers != Customer::all()){
-                    return view('index',compact('customers','prefs','no_serch_message'));
-                }
-            return view('index',compact('customers','prefs'));
-        }
-        //条件16
-        elseif(empty($serch['last_kana']) && empty($serch['first_kana']) && empty($serch['gender']) && !empty($serch['pref_id'])) {
-            $customers = $query->where('pref_id','like',$serch['pref_id'])
-                               ->get();
-                if($customers != Customer::all()){
-                    return view('index',compact('customers','prefs','no_serch_message'));
-                }
-            return view('index',compact('customers','prefs'));
-        }
+
+        $customers = $query->get();
+
+        return view('index',compact('customers','prefs','serch'));
+
     }
 
 
