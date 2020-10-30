@@ -21,9 +21,13 @@ class CustomersController extends Controller
         $prefs = Pref::all();
 
         //初期の検索リクエスト値（serchアクションの$serch表示のため）
-        $serch = NULL;
+        $serch_last_kana = NULL;
+        $serch_first_kana = NULL;
+        $serch_gender1 = NULL;
+        $serch_gender2 = NULL;
+        $serch_pref_id = NULL;
 
-        return view('index', compact('customers','prefs','serch'));
+        return view('index', compact('customers','prefs','serch_last_kana','serch_first_kana','serch_gender1','serch_gender2','serch_pref_id'));
 
 
     }
@@ -36,35 +40,38 @@ class CustomersController extends Controller
         $prefs = Pref::all();
 
         //検索リクエストを取得
-        $serch = $request->input();
-
+        $serch_last_kana = $request->input('last_kana');
+        $serch_first_kana = $request->input('first_kana');
+        $serch_gender1 = $request->input('gender1');
+        $serch_gender2 = $request->input('gender2');
+        $serch_pref_id = $request->input('pref_id');
 
         //クエリ取得
         $query = Customer::query();
 
         //条件1
-        if(!empty($serch['last_kana']))  {
-            $query->where('last_kana','like', '%'.$serch['last_kana'].'%');
+        if(!empty($serch_last_kana))  {
+            $query->where('last_kana','like', '%'.$serch_last_kana.'%');
         }
 
         //条件2
-        if(!empty($serch['first_kana'])) {
-            $query->where('first_kana','like', '%'.$serch['first_kana'].'%');
+        if(!empty($serch_first_kana)) {
+            $query->where('first_kana','like', '%'.$serch_first_kana.'%');
         }
 
         //条件3
-        if(!empty($serch['gender1']) || !empty($serch['gender2']) ) {
-            $query->where('gender','like', $serch['gender1'])->orWhere('gender','like', $serch['gender2']);
+        if(!empty($serch_gender1) || !empty($serch_gender2) ) {
+                $query->whereIn('gender', [$serch_gender1,$serch_gender2]);
         }
 
         //条件4
-        if(!empty($serch['pref_id'])) {
-            $query->where('pref_id','like', $serch['pref_id']);
+        if(!empty($serch_pref_id)) {
+            $query->where('pref_id', $serch_pref_id);
         }
 
         $customers = $query->get();
 
-        return view('index',compact('customers','prefs','serch'));
+        return view('index',compact('customers','prefs','serch_last_kana','serch_first_kana','serch_gender1','serch_gender2','serch_pref_id') );
 
     }
 
