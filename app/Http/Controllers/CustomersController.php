@@ -20,6 +20,7 @@ class CustomersController extends Controller
         //prefsテーブルのデータを全取得
         $prefs = Pref::all();
 
+        //初期の検索リクエスト値（serchアクションの$serch表示のため）
         $serch = NULL;
 
         return view('index', compact('customers','prefs','serch'));
