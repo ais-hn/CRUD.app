@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CustomerSerchRequest extends FormRequest
+class CustomerSearchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,6 @@ class CustomerSerchRequest extends FormRequest
         return [
             'last_kana' => 'max:50',
             'first_kana' => 'max:50',
-            'gender' => '',
-            'pref_id' => '',
         ];
     }
 }

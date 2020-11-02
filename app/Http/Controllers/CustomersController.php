@@ -1,142 +1,194 @@
 <?php
-
+/**
+ * CRUDアプリのコントローラー。
+ */
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Customer;
 use App\Pref;
 use App\Http\Requests\CustomerRequest;
 use App\Http\Requests\CustomerUpdateRequest;
-use App\Http\Requests\CustomerSerchRequest;
+use App\Http\Requests\CustomerSearchRequest;
+use Illuminate\View\View;
 use DB;
+use Illuminate\Http\RedirectResponse;
 
-
+/**
+ * 顧客Controllerのクラス
+ *
+ * @author hanayama <01.hanayama@gmail.com>
+ */
 class CustomersController extends Controller
 {
-    public function index(){
-        //customersテーブルのデータを全取得
+    /**
+     * 検索一覧を表示します。
+     *
+     * @var $input 検索フォームの初期表示として使用。
+     *
+     * @return view
+     */
+    public function index(): view
+    {
+
         $customers = Customer::all();
 
-        //prefsテーブルのデータを全取得
         $prefs = Pref::all();
 
-        //初期の検索リクエスト値（serchアクションの$serch表示のため）
-        $serch_last_kana = NULL;
-        $serch_first_kana = NULL;
-        $serch_gender1 = NULL;
-        $serch_gender2 = NULL;
-        $serch_pref_id = NULL;
+        $input = [
+            'last_kana' => '',
+            'first_kana' => '',
+            'pref_id' => ''
+        ];
 
-        return view('index', compact('customers','prefs','serch_last_kana','serch_first_kana','serch_gender1','serch_gender2','serch_pref_id'));
-
-
+        return view('index', ['customers' => $customers], ['prefs' => $prefs])
+        ->with('input', $input);
     }
 
-    //検索処理方法
-    public function serch(CustomerSerchRequest $request){
-
-
-        //prefsテーブルのデータを全取得
+    /**
+     * 検索の値を取得し、検索します。
+     *
+     * @param CustomerSearchRequest $request リクエスト
+     *
+     * @return view
+     */
+    public function search(CustomerSearchRequest $request): view
+    {
         $prefs = Pref::all();
 
-        //検索リクエストを取得
-        $serch_last_kana = $request->input('last_kana');
-        $serch_first_kana = $request->input('first_kana');
-        $serch_gender1 = $request->input('gender1');
-        $serch_gender2 = $request->input('gender2');
-        $serch_pref_id = $request->input('pref_id');
+        $input = $request->input();
 
-        //クエリ取得
         $query = Customer::query();
 
         //条件1
-        if(!empty($serch_last_kana))  {
-            $query->where('last_kana','like', '%'.$serch_last_kana.'%');
+        if(!empty($input['last_kana'])) {
+            $query->where('last_kana', 'like', '%'.$input['last_kana'].'%');
         }
 
         //条件2
-        if(!empty($serch_first_kana)) {
-            $query->where('first_kana','like', '%'.$serch_first_kana.'%');
+        if(!empty($input['first_kana'])) {
+            $query->where('first_kana', 'like', '%'.$input['first_kana'].'%');
         }
 
         //条件3
-        if(!empty($serch_gender1) || !empty($serch_gender2) ) {
-                $query->whereIn('gender', [$serch_gender1,$serch_gender2]);
+        if(!empty($input['gender1']) || !empty($input['gender2']) ) {
+
+            $genders = [];
+            if(!empty($input['gender1'])) {
+                $genders[] = $input['gender1'];
+            }
+            if(!empty($input['gender2'])) {
+                $genders[] = $input['gender2'];
+            }
+            $query->whereIn('gender', $genders);
         }
 
         //条件4
-        if(!empty($serch_pref_id)) {
-            $query->where('pref_id', $serch_pref_id);
+        if(!empty($input['pref_id'])) {
+            $query->where('pref_id', $input['pref_id']);
         }
 
         $customers = $query->get();
 
-        return view('index',compact('customers','prefs','serch_last_kana','serch_first_kana','serch_gender1','serch_gender2','serch_pref_id') );
-
+        return view('index', ['customers' => $customers], ['prefs' => $prefs])->with('input', $input);
     }
 
-
-    public function detail($id){
-        //customersテーブルのIDで顧客情報を取得
+    /**
+     * 顧客詳細を表示します。
+     *
+     * @param $id idパラメーター
+     *
+     * @return view
+     */
+    public function detail($id): view
+    {
         $customers = Customer::findOrFail($id);
-        return view('detail', compact('customers'));
+        return view('detail', ['customers' => $customers]);
     }
 
-    //deatailファイルからの削除方法
-    public function destroy($id){
+    /**
+     * 顧客詳細から顧客データを消します。
+     *
+     * @param $id パラメーターid
+     *
+     * @return RedirectResponce
+     */
+    public function destroy($id): RedirectResponse
+    {
         $customers = Customer::findOrFail($id);
-
         $customers->delete();
 
         return redirect()->route('customers.index');
     }
 
-    public function create(){
-        //prefsテーブルのデータを取得
+    /**
+     * 顧客データを生成します。
+     *
+     * @return view
+     */
+    public function create(): view
+    {
         $prefs = Pref::all();
-        return view('create', compact('prefs'));
+        return view('create', ['prefs' => $prefs]);
     }
 
-    //createのデータ送り先
-    public function store(CustomerRequest $request){
-        //formの値を取得
+    /**
+     * 顧客データの保存処理をします。
+     *
+     * @param CustomerRequest $request リクエスト
+     *
+     * @return RedirectResponce
+     */
+    public function store(CustomerRequest $request): RedirectResponse
+    {
         $input = $request->input();
-        //トークンを消す
+
         unset($input['_token']);
 
         DB::transaction(function () use ($input) {
-        $customer = new Customer();
-        $customer->fill($input)->save();
-        });
+            $customer = new Customer();
+                $customer->fill($input)->save();
+            }
+        );
 
-        return redirect()->route('customers.index')->with('signup_message','登録しました。');
-
+        return redirect()->route('customers.index')
+            ->with('signup_message', '登録しました。');
     }
 
-    public function edit($id){
+    /**
+     * 顧客データを編集します。
+     *
+     * @param $id パラメーターid
+     *
+     * @return view
+     */
+    public function edit($id): view
+    {
         $customers = Customer::findOrFail($id);
         $prefs = Pref::all();
 
-
-        return view('edit', compact('customers', 'prefs'));
+        return view('edit', ['customers' => $customers], ['prefs' => $prefs]);
     }
+    /**
+     * 編集した顧客データをアップデートします。
+     *
+     * @param CustomerUpdateRequest $request リクエスト
+     *
+     * @return RedirectResponce
+     */
+    public function update(CustomerUpdateRequest $request): RedirectResponse
+    {
 
-    //update時のformの値を取得
-    public function update(CustomerUpdateRequest $request){
-
-        //formの値を取得
         $input = $request->input();
-        //トークンを消す
+
         unset($input['_token']);
 
-        DB::transaction(function () use ($input) {
-        $customer = Customer::findOrFail($input['id']);
-        $customer->fill($input)->save();
-        });
+        DB:: transaction(function () use ($input) {
+            $customer = Customer::findOrFail($input['id']);
+                $customer->fill($input)->save();
+            }
+        );
 
         return redirect()->route('customers.index');
-
-
     }
 
 }

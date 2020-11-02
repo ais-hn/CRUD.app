@@ -8,21 +8,20 @@ use Carbon\Carbon;
 class PrefsTableSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Prefsテーブルに都道府県の初期値をセットします。
+     *
+     * @var $table prefsマイグレーションを代入。
      *
      * @return void
      */
+    public function run()
+    {
 
-     //初期値で都道府県をseedingする。
-    public function run(){
+        $table = 'prefs';
 
-    //prefsマイグレーションを代入
-    $table = 'prefs';
+        //2重登録を防ぐ
+        DB::table($table)->delete();
 
-    //2重登録を防ぐ
-    DB::table($table)->delete();
-
-    // データ挿入
         $list = [
             ['id' => 1, 'name' => '北海道'],
             ['id' => 2, 'name' => '青森県'],
@@ -73,8 +72,7 @@ class PrefsTableSeeder extends Seeder
             ['id' => 47, 'name' => '沖縄県']
         ];
 
-        //prefsテーブルに都道府県の初期データをセット
-            DB::table($table)->insert($list);
+        DB::table($table)->insert($list);
     }
 }
 
