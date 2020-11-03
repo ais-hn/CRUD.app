@@ -42,6 +42,5 @@ class CustomerRequest extends FormRequest
             'mobile' => 'required','regex:/^(070|080|090)-\d{4}-\d{4}$/',
             'email' => 'required|email|unique:customers|max:80'
         ];
-
     }
 }

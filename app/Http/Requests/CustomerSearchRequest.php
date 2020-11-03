@@ -25,7 +25,7 @@ class CustomerSearchRequest extends FormRequest
     /**
      * 検索一覧のバリデーション。
      *
-     * @return array　顧客テーブルのカラム。
+     * @return array 顧客テーブルのカラム。
      */
     public function rules()
     {

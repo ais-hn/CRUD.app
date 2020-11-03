@@ -21,7 +21,7 @@ class CustomerUpdateRequest extends FormRequest
     /**
      * 顧客編集のバリデーション。
      *
-     * @return array 顧客情報のカラム。
+     * @return array 顧客テーブルのカラム。
      */
     public function rules()
     {
