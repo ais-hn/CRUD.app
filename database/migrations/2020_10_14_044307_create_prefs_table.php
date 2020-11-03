@@ -16,12 +16,10 @@ class CreatePrefsTable extends Migration
     public function up()
     {
         Schema::create('prefs', function (Blueprint $table) {
-            $table->increments('id')->unsigned()->autoIncrement()->comment('ID');
+            $table->increments('id')->unsigned()->comment('ID');
             $table->string('name',128)->comment('都道府県名');
             $table->timestamp('created_at')->useCurrent()->comment('作成日時');
             $table->timestamp('updated_at')->useCurrent()->comment('更新日時');
-            //プライマリーキー設定
-            //$table->primary('id');
         });
     }
 

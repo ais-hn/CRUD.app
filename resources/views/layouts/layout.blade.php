@@ -13,9 +13,20 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
     </head>
     <body>
+        <header>
+            <div class="navbar navbar-dark bg-dark shadow-sm">
+                <div class="container d-flex justify-content-between">
+                    <a href="{{ route('customers.index') }}" class="navbar-brand d-flex align-items-center">
+                        <strong>@yield('title')</strong>
+                    </a>
+                </div>
+            </div>
+        </header>
 
         @yield('content')
 
+        <script>
+            @yield('javascript')
+        </script>
     </body>
-
 </html>
