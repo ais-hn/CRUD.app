@@ -1,9 +1,16 @@
 <?php
+/**
+ * 都道府県テーブルのマイグレーション。
+ */
+namespace Database\migrations;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * 都道府県テーブルMigrationのクラス。
+ */
 class CreatePrefsTable extends Migration
 {
     /**
@@ -17,7 +24,7 @@ class CreatePrefsTable extends Migration
     {
         Schema::create('prefs', function (Blueprint $table) {
             $table->increments('id')->unsigned()->comment('ID');
-            $table->string('name',128)->comment('都道府県名');
+            $table->string('name', 128)->comment('都道府県名');
             $table->timestamp('created_at')->useCurrent()->comment('作成日時');
             $table->timestamp('updated_at')->useCurrent()->comment('更新日時');
         });
