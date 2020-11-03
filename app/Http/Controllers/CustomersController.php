@@ -60,30 +60,29 @@ class CustomersController extends Controller
         $query = Customer::query();
 
         //条件1
-        if(!empty($input['last_kana'])) {
+        if (!empty($input['last_kana'])) {
             $query->where('last_kana', 'like', '%'.$input['last_kana'].'%');
         }
 
         //条件2
-        if(!empty($input['first_kana'])) {
+        if (!empty($input['first_kana'])) {
             $query->where('first_kana', 'like', '%'.$input['first_kana'].'%');
         }
 
         //条件3
-        if(!empty($input['gender1']) || !empty($input['gender2']) ) {
-
+        if (!empty($input['gender1']) || !empty($input['gender2'])) {
             $genders = [];
-            if(!empty($input['gender1'])) {
+            if (!empty($input['gender1'])) {
                 $genders[] = $input['gender1'];
             }
-            if(!empty($input['gender2'])) {
+            if (!empty($input['gender2'])) {
                 $genders[] = $input['gender2'];
             }
             $query->whereIn('gender', $genders);
         }
 
         //条件4
-        if(!empty($input['pref_id'])) {
+        if (!empty($input['pref_id'])) {
             $query->where('pref_id', $input['pref_id']);
         }
 
@@ -108,7 +107,7 @@ class CustomersController extends Controller
     /**
      * 顧客詳細から顧客データを消します。
      *
-     * @param $id パラメーターid
+     * @param $id idパラメーター
      *
      * @return RedirectResponce
      */
@@ -146,7 +145,7 @@ class CustomersController extends Controller
 
         DB::transaction(function () use ($input) {
             $customer = new Customer();
-                $customer->fill($input)->save();
+            $customer->fill($input)->save();
             }
         );
 
@@ -182,13 +181,12 @@ class CustomersController extends Controller
 
         unset($input['_token']);
 
-        DB:: transaction(function () use ($input) {
+        DB::transaction(function () use ($input) {
             $customer = Customer::findOrFail($input['id']);
-                $customer->fill($input)->save();
+            $customer->fill($input)->save();
             }
         );
 
         return redirect()->route('customers.index');
     }
-
 }

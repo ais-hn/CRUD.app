@@ -1,16 +1,8 @@
-@extends('layout')
+@extends('layouts.layout')
+
+@section('title','顧客管理（編集）')
 
 @section('content')
-    <body>
-        <header>
-            <div class="navbar navbar-dark bg-dark shadow-sm">
-                <div class="container d-flex justify-content-between">
-                    <a href="{{ route('customers.index') }}" class="navbar-brand d-flex align-items-center">
-                        <strong>顧客管理（編集）</strong>
-                    </a>
-                </div>
-            </div>
-        </header>
 
     {{--更新フォーム--}}
     <main role="main">
@@ -28,10 +20,8 @@
             </div>
             @endif
 
-            {{--POSTで更新--}}
             <form id="form" method="post" action="{{ route('customers.update') }}">
                 @csrf
-
 
                 {{--hiddenで更新時はidも送る--}}
                 <input type="hidden" name="id" value="{{ $customers->id }}" />
@@ -180,38 +170,18 @@
         <div id="complete-confirm" title="確認" style="display: none;">
             <p><span class="ui-icon ui-icon-info" style="float:left; margin:12px 12px 20px 0;"></span>更新しますか？</p>
         </div>
+@endsection
 
-        <script>
-            $("#complete").click(function() {
-                completeConfirm(function(result){
-                    if (result) {
-                        $("form").submit();
-                    }
-                });
-            });
+@section('javascript')
 
-            function completeConfirm(response){
-                notScreenRelease = true;
-                var buttons = {};
-                buttons['キャンセル'] = function(){$(this).dialog('close');response(false)};
-                buttons['更新'] = function(){$(this).dialog('close');response(true)};
-
-                $("#complete-confirm").dialog({
-                    show: {
-                        effect: "drop",
-                        duration: 500
-                    },
-                    hide: {
-                        effect: "drop",
-                        duration: 500
-                    },
-                    resizable: false,
-                    height: "auto",
-                    width: 400,
-                    modal: true,
-                    buttons: buttons
-                });
+    $("#complete").click(function() {
+        completeConfirm(function(result){
+            if (result) {
+                $("form").submit();
             }
-        </script>
-    </body>
+        });
+    });
+
+@include('layouts.submit', ['btn' => '更新'])
+
 @endsection

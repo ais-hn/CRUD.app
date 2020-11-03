@@ -1,17 +1,8 @@
-@extends('layout')
+@extends('layouts.layout')
+
+@section('title','顧客管理')
 
 @section('content')
-
-{{-- ヘッダー --}}
-<header>
-    <div class="navbar navbar-dark bg-dark shadow-sm">
-        <div class="container d-flex justify-content-between">
-            <a href="{{ route('customers.index') }}" class="navbar-brand d-flex align-items-center">
-                <strong>顧客管理</strong>
-            </a>
-        </div>
-    </div>
-</header>
 
 <main role="main">
     <div class="container-fluid" style="padding-left: 50px;padding-right: 50px;">
@@ -100,7 +91,6 @@
 
             <div class="row">
                 <table class="table table-bordered table-hover">
-                    {{--テーブルの各カラム項目--}}
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">ID</th>
@@ -157,10 +147,10 @@
         </div>
     </div>
 </main>
+@endsection
 
-<script>
-    $("#search").click(function() {
-        $("form").submit();
-    });
-</script>
+@section('javascript')
+$("#search").click(function() {
+    $("form").submit();
+});
 @endsection

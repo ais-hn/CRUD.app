@@ -1,18 +1,8 @@
-@extends('layout')
+@extends('layouts.layout')
+
+@section('title','顧客管理（詳細）')
 
 @section('content')
-
-    <body>
-        {{-- ヘッダー --}}
-        <header>
-            <div class="navbar navbar-dark bg-dark shadow-sm">
-                <div class="container d-flex justify-content-between">
-                    <a href="{{ route('customers.index') }}" class="navbar-brand d-flex align-items-center">
-                        <strong>顧客管理（詳細）</strong>
-                    </a>
-                </div>
-            </div>
-        </header>
 
         <main role="main">
             <div class="container-fluid" style="margin-top: 50px; padding-left: 100px;padding-right: 100px;">
@@ -139,37 +129,17 @@
             <p><span class="ui-icon ui-icon-info" style="float:left; margin:12px 12px 20px 0;"></span>削除しますか？</p>
         </div>
 
-        <script>
-            $("#complete").click(function() {
-                completeConfirm(function(result){
-                    if (result) {
-                        location.replace("{{ route('customers.destroy',['id' => $customers->id]) }} ");
-                    }
-                });
-            });
+@endsection
 
-            function completeConfirm(response){
-                notScreenRelease = true;
-                var buttons = {};
-                buttons['キャンセル'] = function(){$(this).dialog('close');response(false)};
-                buttons['削除'] = function(){$(this).dialog('close');response(true)};
+@section('javascript')
+$("#complete").click(function() {
+    completeConfirm(function(result){
+        if (result) {
+            location.replace("{{ route('customers.destroy',['id' => $customers->id]) }} ");
+        }
+    });
+});
 
-                $("#complete-confirm").dialog({
-                    show: {
-                        effect: "drop",
-                        duration: 500
-                    },
-                    hide: {
-                        effect: "drop",
-                        duration: 500
-                    },
-                    resizable: false,
-                    height: "auto",
-                    width: 400,
-                    modal: true,
-                    buttons: buttons
-                });
-            }
-        </script>
-    </body>
+@include('layouts.submit', ['btn' => '削除'])
+
 @endsection

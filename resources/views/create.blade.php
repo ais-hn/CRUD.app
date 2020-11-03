@@ -1,18 +1,8 @@
-@extends('layout')
+@extends('layouts.layout')
+
+@section('title','顧客管理（新規登録）')
 
 @section('content')
-
-<body>
-    {{-- ヘッダー --}}
-    <header>
-        <div class="navbar navbar-dark bg-dark shadow-sm">
-            <div class="container d-flex justify-content-between">
-                <a href="{{ route('customers.index') }}" class="navbar-brand d-flex align-items-center">
-                    <strong>顧客管理（新規登録）</strong>
-                </a>
-            </div>
-        </div>
-    </header>
 
     {{--登録フォーム--}}
     <main role="main">
@@ -29,7 +19,7 @@
                 </div>
             </div>
             @endif
-            {{--POSTのため、@csrf指定--}}
+
             <form id="form" method="post" action="{{ route('customers.store') }}">
                 @csrf
                 <div class="col-md-8 order-md-1">
@@ -178,45 +168,18 @@
     <div id="complete-confirm" title="確認" style="display: none;">
         <p><span class="ui-icon ui-icon-info" style="float:left; margin:12px 12px 20px 0;"></span>登録しますか？</p>
     </div>
+@endsection
 
-    <script>
-        $("#complete").click(function() {
-            completeConfirm(function(result){
-                if (result) {
-                    $("form").submit();
-                }
-            });
-        });
+@section('javascript')
 
-        function completeConfirm(response){
-            notScreenRelease = true;
-
-            var buttons = {};
-            buttons['キャンセル'] = function(){
-                $(this).dialog('close');
-                response(false)
-            };
-            buttons['登録'] = function(){
-                $(this).dialog('close');
-                response(true)
-            };
-
-            $("#complete-confirm").dialog({
-                show: {
-                    effect: "drop",
-                    duration: 500
-                },
-                hide: {
-                    effect: "drop",
-                    duration: 500
-                },
-                resizable: false,
-                height: "auto",
-                width: 400,
-                modal: true,
-                buttons: buttons
-            });
+$("#complete").click(function() {
+    completeConfirm(function(result){
+        if (result) {
+            $("form").submit();
         }
-    </script>
-</body>
+    });
+});
+
+@include('layouts.submit', 'btn' => '登録')
+
 @endsection

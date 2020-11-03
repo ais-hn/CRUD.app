@@ -1,6 +1,6 @@
 <?php
 /**
- * CRUDアプリのルーティング。
+ * CRUDアプリのルート。
  */
 use App\Http\Controllers\CustomersController;
 
