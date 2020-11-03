@@ -1,16 +1,25 @@
 <?php
+/**
+ * 都道府県テーブルのSeeder。
+ */
+namespace Seeds;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Pref;
 use Carbon\Carbon;
 
+/**
+ * 都道府県テーブルのSeederクラス。
+ */
 class PrefsTableSeeder extends Seeder
 {
     /**
      * Prefsテーブルに都道府県の初期値をセットします。
      *
      * @var $table prefsマイグレーションを代入。
+     *
+     * @var $list prefsはマスターテーブルのため、id指定。
      *
      * @return void
      */
@@ -75,4 +84,3 @@ class PrefsTableSeeder extends Seeder
         DB::table($table)->insert($list);
     }
 }
-

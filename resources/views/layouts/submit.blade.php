@@ -5,7 +5,7 @@ function completeConfirm(response){
         $(this).dialog('close');
         response(false)};
 
-    buttons[ $btn ] = function(){
+    buttons[ '{{$btn}}' ] = function(){
         $(this).dialog('close');
         response(true)};
 

@@ -1,13 +1,19 @@
 <?php
 
+/**
+ * 顧客検索のフォームリクエスト。
+ */
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * 顧客検索のRequestクラス。
+ */
 class CustomerSearchRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * リクエストに対する権限設定。
      *
      * @return bool
      */
@@ -17,9 +23,9 @@ class CustomerSearchRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * 検索一覧のバリデーション。
      *
-     * @return array
+     * @return array　顧客テーブルのカラム。
      */
     public function rules()
     {

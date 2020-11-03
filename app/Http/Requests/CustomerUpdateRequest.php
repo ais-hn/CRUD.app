@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * 顧客編集のフォームリクエスト。
+ */
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -7,7 +9,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class CustomerUpdateRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * リクエストに対する権限設定。
      *
      * @return bool
      */
@@ -17,9 +19,9 @@ class CustomerUpdateRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * 顧客編集のバリデーション。
      *
-     * @return array
+     * @return array 顧客情報のカラム。
      */
     public function rules()
     {
