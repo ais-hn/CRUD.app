@@ -11,6 +11,8 @@ use Carbon\Carbon;
 
 /**
  * 都道府県テーブルのSeederクラス。
+ *
+ * @package Seeds
  */
 class PrefsTableSeeder extends Seeder
 {

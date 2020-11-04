@@ -8,6 +8,8 @@ use Illuminate\Database\Seeder;
 
 /**
  * DBのSeederのクラス。
+ *
+ * @package Seeds
  */
 class DatabaseSeeder extends Seeder
 {

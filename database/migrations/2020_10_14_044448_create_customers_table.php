@@ -2,8 +2,6 @@
 /**
  * 顧客テーブルのマイグレーション。
  */
-namespace Database\migrations;
-
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -18,8 +16,6 @@ class CreateCustomersTable extends Migration
      *
      * @return void
      */
-
-    //顧客のテーブル設計
     public function up()
     {
         Schema::create('customers', function (Blueprint $table) {

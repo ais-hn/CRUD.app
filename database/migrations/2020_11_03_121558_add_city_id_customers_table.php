@@ -2,8 +2,6 @@
 /**
  * 顧客テーブルの市区町村カラムの追加マイグレーション。
  */
-namespace Database\migrations;
-
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -16,7 +14,6 @@ class AddCityIdCustomersTable extends Migration
     /**
      * Run the migrations.
      *
-     * @param customers 顧客テーブル。
      * @return void
      */
     public function up()
@@ -34,7 +31,7 @@ class AddCityIdCustomersTable extends Migration
     public function down()
     {
         Schema::table('customers', function (Blueprint $table) {
-            //
+            $table->dropColumn('city_id');
         });
     }
 }

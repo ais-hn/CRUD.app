@@ -9,6 +9,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * 顧客検索のRequestクラス。
+ *
+ * @package App\Http\Requests
  */
 class CustomerSearchRequest extends FormRequest
 {

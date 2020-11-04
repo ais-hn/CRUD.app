@@ -14,6 +14,7 @@ class CustomerRequest extends FormRequest
     /**
      * リクエストに対する権限設定。
      *
+     * @package App\Http\Requests
      * @return bool
      */
     public function authorize()

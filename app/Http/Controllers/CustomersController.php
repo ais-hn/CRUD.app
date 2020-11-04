@@ -17,6 +17,7 @@ use Illuminate\Http\RedirectResponse;
  * 顧客Controllerのクラス
  *
  * @author hanayama <01.hanayama@gmail.com>
+ * @package App\Http\Controllers
  */
 class CustomersController extends Controller
 {

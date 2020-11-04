@@ -98,7 +98,16 @@
                                     {{ $pref->name }}
                                 </option>
                                 @endforeach
+                            </select>
+                        </div>
+                    </div>
 
+                    <div class="row">
+                        {{--市区町村--}}
+                        <div class="col-md-2 mb-3">
+                            <label for="city_id">市区町村 <span class="badge badge-danger">必須</span></label>
+                            <select class="custom-select d-block w-100" name="city_id" required>
+                                <option value="" selected></option>
                             </select>
                         </div>
                     </div>
@@ -164,6 +173,7 @@
             </div>
         </div>
     </main>
+
     {{--確認メッセージ表示--}}
     <div id="complete-confirm" title="確認" style="display: none;">
         <p><span class="ui-icon ui-icon-info" style="float:left; margin:12px 12px 20px 0;"></span>登録しますか？</p>
@@ -180,6 +190,6 @@ $("#complete").click(function() {
     });
 });
 
-@include('layouts.submit', 'btn' => '登録')
+@include('layouts.submit', ['btn' => '登録'])
 
 @endsection

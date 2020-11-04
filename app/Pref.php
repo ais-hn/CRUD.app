@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 /**
  * 都道府県Modelのクラスです。
  *
- * @var $dates 日付ミューテーターを使用します。
+ * @package App
  */
 class Pref extends Model
 {

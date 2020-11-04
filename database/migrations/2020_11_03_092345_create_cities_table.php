@@ -2,7 +2,6 @@
 /**
  * 市町村テーブルのマイグレーション。
  */
-namespace Database\migrations;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,11 +15,13 @@ class CreateCitiesTable extends Migration
     /**
      * Run the migrations.
      *
-     * @param cities 市区町村テーブル。
      * @return void
      */
     public function up()
     {
+        /**
+         * @param cities 市区町村テーブル。
+         */
         Schema::create('cities', function (Blueprint $table) {
             $table->increments('id')->unsigned()->comment('ID');
             $table->integer('pref_id')->unsigned()->comment('都道府県ID');
@@ -41,6 +42,9 @@ class CreateCitiesTable extends Migration
      */
     public function down()
     {
+    /**
+     * @param cities 市区町村テーブル。
+     */
         Schema::dropIfExists('cities');
     }
 }

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 /**
  * 顧客Modelのクラス。
  *
- * @var $dates 日付ミューテーターを使用します。
+ * @package App
  */
 class Customer extends Model
 {
