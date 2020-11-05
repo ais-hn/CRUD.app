@@ -27,3 +27,6 @@ Route::post('/update', 'CustomersController@update')->name('customers.update');
 
 //detailファイルからの顧客データの削除
 Route::get('/destoroy/{id}', 'CustomersController@destroy')->name('customers.destroy');
+
+//createファイル、editファイルの市区町村 ajax用
+Route::get('/pref_select/{pref_id}', 'CustomersController@prefSelect')->name('pref_select');

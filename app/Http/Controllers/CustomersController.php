@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Customer;
 use App\Pref;
+use App\Cities;
 use App\Http\Requests\CustomerRequest;
 use App\Http\Requests\CustomerUpdateRequest;
 use App\Http\Requests\CustomerSearchRequest;
@@ -173,5 +174,14 @@ class CustomersController extends Controller
             });
 
         return redirect()->route('customers.index');
+    }
+
+    /**
+     * 市区町村テーブルのデータをjsonで渡します。
+     */
+    public function prefSelect($pref_id)
+    {
+        $cities = Cities::findOrFail($pref_id);
+        return response()->json(['cities' => $cities]);
     }
 }

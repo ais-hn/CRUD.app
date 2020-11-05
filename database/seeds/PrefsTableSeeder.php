@@ -2,7 +2,6 @@
 /**
  * 都道府県テーブルのSeeder。
  */
-namespace Seeds;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -11,17 +10,14 @@ use Carbon\Carbon;
 
 /**
  * 都道府県テーブルのSeederクラス。
- *
- * @package Seeds
  */
 class PrefsTableSeeder extends Seeder
 {
     /**
      * Prefsテーブルに都道府県の初期値をセットします。
      *
-     * @var $table prefsマイグレーションを代入。
-     *
-     * @var $list prefsはマスターテーブルのため、id指定。
+     * prefsマイグレーションを代入。
+     * prefsはマスターテーブルのため、id指定。
      *
      * @return void
      */

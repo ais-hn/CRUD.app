@@ -184,6 +184,8 @@
 
 @section('javascript')
 
+    @include('layouts.pref_select')
+
     $('#pref_id').on('change',function(){
         $.ajax({
             url: '',
