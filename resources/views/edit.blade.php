@@ -184,19 +184,7 @@
 
 @section('javascript')
 
-    @include('layouts.pref_select')
-
-    $('#pref_id').on('change',function(){
-        $.ajax({
-            url: '',
-            dataType: '',
-            type: 'POST'
-        }).done(function(date){
-            $('#city_id').html(date);
-        }).fail(function(date){
-            alert("取得できませんでした");
-        })
-    });
+@include('layouts.pref_select')
 
     $("#complete").click(function() {
         completeConfirm(function(result){

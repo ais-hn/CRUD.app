@@ -6,7 +6,7 @@ function setCities(prefId) {
 
     var request = $.ajax({
         type: "GET",
-        url: "{{ route('pref.select') }}",
+        url: "{{ route('pref.select', ['pref_id' => $pref->id]) }}",
         data: {
             "pref_id" : prefId
         }
@@ -17,10 +17,6 @@ function setCities(prefId) {
         responseData.forEach(function(item, index){
             $("#city_id").append($('<option>').text(item.name).attr('value', item.id));
         });
-    });
-
-    request.fail(function(responseData){
-        alert(responseData['responseJSON']);
     });
 }
 

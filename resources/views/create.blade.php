@@ -92,7 +92,7 @@
                         {{--都道府県--}}
                         <div class="col-md-2 mb-3">
                             <label for="pref_id">都道府県 <span class="badge badge-danger">必須</span></label>
-                            <select class="custom-select d-block w-100" name="pref_id" required>
+                            <select id="pref_id" class="custom-select d-block w-100" name="pref_id" required>
                                 @foreach($prefs as $pref)
                                 <option value="{{ $pref->id }}" {{ ($pref->id == old('pref_id')) ? "selected" : "" }}>
                                     {{ $pref->name }}
@@ -106,7 +106,7 @@
                         {{--市区町村--}}
                         <div class="col-md-2 mb-3">
                             <label for="city_id">市区町村 <span class="badge badge-danger">必須</span></label>
-                            <select class="custom-select d-block w-100" name="city_id" required>
+                            <select  id="city_id" class="custom-select d-block w-100" name="city_id" required>
                                 <option value="" selected></option>
                             </select>
                         </div>
@@ -181,6 +181,8 @@
 @endsection
 
 @section('javascript')
+
+@include('layouts.pref_select')
 
 $("#complete").click(function() {
     completeConfirm(function(result){

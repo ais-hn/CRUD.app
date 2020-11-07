@@ -182,7 +182,7 @@ class CustomersController extends Controller
     /**
      * 市区町村テーブルのデータをjsonで渡します。
      *
-     * @param $pref_id 都道府県ID
+     * @param Request $request 都道府県ID
      * @return JsonResponse レスポンス
      */
     public function prefSelect(Request $request): JsonResponse

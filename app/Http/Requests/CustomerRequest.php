@@ -37,6 +37,7 @@ class CustomerRequest extends FormRequest
             'gender' => 'required',
             'birthday' => 'required|date',
             'pref_id' => 'required',
+            'city_id' => 'required',
             'address' => 'required|max:80','regex:/^[0-9]{3}-[0-9]{4}$/',
             'buildding' => 'max:80',
             'tel' => 'required','regex:/^0\d{1,3}-\d{1,4}-\d{4}$/',
