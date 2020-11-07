@@ -6,13 +6,16 @@ namespace App\Http\Controllers;
 
 use App\Customer;
 use App\Pref;
-use App\Cities;
+use App\City;
 use App\Http\Requests\CustomerRequest;
 use App\Http\Requests\CustomerUpdateRequest;
 use App\Http\Requests\CustomerSearchRequest;
 use Illuminate\View\View;
 use DB;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
  * 顧客Controllerのクラス
@@ -178,10 +181,13 @@ class CustomersController extends Controller
 
     /**
      * 市区町村テーブルのデータをjsonで渡します。
+     *
+     * @param $pref_id 都道府県ID
+     * @return JsonResponse レスポンス
      */
-    public function prefSelect($pref_id)
+    public function prefSelect(Request $request): JsonResponse
     {
-        $cities = Cities::findOrFail($pref_id);
-        return response()->json(['cities' => $cities]);
+        $city = City::where('pref_id', '=', $request->pref_id)->get();
+        return response()->json($city);
     }
 }

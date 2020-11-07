@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App
  */
-class Cities extends Model
+class City extends Model
 {
     protected $guarded = ['id'];
     protected $date = ['created_at', 'updated_at'];
