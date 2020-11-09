@@ -1,4 +1,4 @@
-function setCities(prefId) {
+function setCities(prefId,cityid) {
     if (!prefId) {
         $("#city_id").empty();
         return;
@@ -15,13 +15,17 @@ function setCities(prefId) {
     request.done(function(responseData) {
         $("#city_id").empty();
         responseData.forEach(function(item, index){
-            $("#city_id").append($('<option>').text(item.name).attr('value', item.id));
+            if (cityId !== undefined && cityId === item.id) {
+                $("#city_id").append($('<option>').text(item.name).attr('value', item.id).prop('selected', true));
+            } else {
+                $("#city_id").append($('<option>').text(item.name).attr('value', item.id));
+            }
         });
     });
 }
 
 $(function() {
-    setCities($("#pref_id").val());
+    setCities($("#pref_id").val(), {{ old('city_id', $customers->city_id) }});
 });
 $("#pref_id").change(function() {
     setCities($("#pref_id").val());

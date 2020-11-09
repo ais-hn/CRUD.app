@@ -4,8 +4,6 @@
  */
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Cities;
-use Carbon\Carbon;
 
 /**
  * 市区町村テーブルSeederのクラス。

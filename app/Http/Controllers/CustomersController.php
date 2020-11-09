@@ -15,7 +15,6 @@ use DB;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 /**
  * 顧客Controllerのクラス
@@ -103,7 +102,7 @@ class CustomersController extends Controller
      * 顧客詳細から顧客データを消します。
      *
      * @param $id 顧客ID
-     * @return RedirectResponce
+     * @return RedirectResponse リダイレクト
      */
     public function destroy($id): RedirectResponse
     {
@@ -128,7 +127,7 @@ class CustomersController extends Controller
      * 顧客データの保存処理をします。
      *
      * @param CustomerRequest $request リクエスト
-     * @return RedirectResponce リダイレクト
+     * @return RedirectResponse レスポンス
      */
     public function store(CustomerRequest $request): RedirectResponse
     {
@@ -139,7 +138,7 @@ class CustomersController extends Controller
         DB::transaction(function () use ($input) {
             $customer = new Customer();
             $customer->fill($input)->save();
-            });
+        });
 
         return redirect()->route('customers.index')
             ->with('signup_message', '登録しました。');
@@ -162,7 +161,7 @@ class CustomersController extends Controller
      * 編集した顧客データをアップデートします。
      *
      * @param CustomerUpdateRequest $request リクエスト
-     * @return RedirectResponce リダイレクト
+     * @return RedirectResponse レスポンス
      */
     public function update(CustomerUpdateRequest $request): RedirectResponse
     {
@@ -174,7 +173,7 @@ class CustomersController extends Controller
         DB::transaction(function () use ($input) {
             $customer = Customer::findOrFail($input['id']);
             $customer->fill($input)->save();
-            });
+        });
 
         return redirect()->route('customers.index');
     }

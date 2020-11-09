@@ -19,7 +19,8 @@ class AddCityIdCustomersTable extends Migration
     public function up()
     {
         Schema::table('customers', function (Blueprint $table) {
-            $table->integer('city_id')->unsigned()->comment('市区町村ID');
+            $table->integer('city_id')->unsigned()->comment('市区町村ID')->after('pref_id');
+            $table->foreign('city_id')->references('id')->on('cities');
         });
     }
 

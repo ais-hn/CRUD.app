@@ -2,8 +2,6 @@
 /**
  * DBのSeeder。
  */
-namespace Seeds;
-
 use Illuminate\Database\Seeder;
 
 /**
