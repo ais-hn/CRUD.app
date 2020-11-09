@@ -12,7 +12,7 @@ use Illuminate\Database\Migrations\Migration;
 class AddCityIdCustomersTable extends Migration
 {
     /**
-     * Run the migrations.
+     * 顧客テーブルに市区町村IDを追加。
      *
      * @return void
      */

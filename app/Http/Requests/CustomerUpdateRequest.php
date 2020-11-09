@@ -39,7 +39,18 @@ class CustomerUpdateRequest extends FormRequest
             'buildding' => 'max:80',
             'tel' => 'required','regex:/^0\d{1,3}-\d{1,4}-\d{4}$/',
             'mobile' => 'required','regex:/^(070|080|090)-\d{4}-\d{4}$/',
-            'email' => 'required|email|max:80'
+            'email' => 'required|email|unique_email|max:80'
+        ];
+    }
+    /**
+     * 編集時のメールアドレスのバリデーションエラ〜メッセージ。
+     *
+     * @return array エラーメッセージ。
+     */
+    public function messages()
+    {
+        return [
+            'email.unique_email' => 'メールアドレスは既に登録されています。',
         ];
     }
 }

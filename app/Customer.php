@@ -27,4 +27,15 @@ class Customer extends Model
     {
         return $this->belongsTo('App\Pref');
     }
+
+    /**
+     * 市区町村テーブルとのリレーション。
+     * 市区町村テーブルのIDと顧客テーブルのcity_idを紐付け。
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function city()
+    {
+        return $this->belongsTo('App\City');
+    }
 }
