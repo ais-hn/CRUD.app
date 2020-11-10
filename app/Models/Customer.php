@@ -2,24 +2,26 @@
 /**
  * 顧客テーブルのモデル。
  */
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * 顧客Modelのクラス。
+ * ソフトデリートを使用。
  *
- * @package App
+ * @package App\Models
  */
 class Customer extends Model
 {
+    use SoftDeletes;
+
     protected $guarded = ['id'];
-    protected $dates = ['birthday','created_at','updated_at'];
+    protected $dates = ['birthday','created_at','updated_at','deleted_at'];
 
     /**
      * 都道府県テーブルとのリレーション。
-     * 都道府県テーブルのIDと顧客テーブルのpref_idを紐付け。
      *
      * @return void
      */

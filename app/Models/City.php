@@ -2,14 +2,14 @@
 /**
  * 市区町村テーブルのモデル。
  */
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * 市区町村Modelのクラス。
  *
- * @package App
+ * @package App\Models
  */
 class City extends Model
 {

@@ -29,4 +29,4 @@ Route::post('/update', 'CustomersController@update')->name('customers.update');
 Route::get('/destoroy/{id}', 'CustomersController@destroy')->name('customers.destroy');
 
 //createファイル、editファイルの市区町村 ajax用
-Route::get('/prefselect/{pref_id}', 'CustomersController@prefSelect')->name('pref.select');
+Route::get('/prefselect/{pref_id}', 'PrefSelectController@prefSelect')->name('pref.select');

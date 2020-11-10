@@ -1,20 +1,17 @@
 <?php
 /**
- * 顧客コントローラー。
+ * 顧客コントローラー
  */
 namespace App\Http\Controllers;
 
-use App\Customer;
-use App\Pref;
-use App\City;
+use App\Models\Customer;
+use App\Models\Pref;
 use App\Http\Requests\CustomerRequest;
 use App\Http\Requests\CustomerUpdateRequest;
 use App\Http\Requests\CustomerSearchRequest;
 use Illuminate\View\View;
 use DB;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 /**
  * 顧客Controllerのクラス
@@ -25,10 +22,10 @@ use Illuminate\Http\Request;
 class CustomersController extends Controller
 {
     /**
-     * 検索一覧を表示します。
+     * 検索一覧を表示
      *
-     * @param $input 検索フォームの初期表示として使用。
-     * @return View
+     * @param $input 入力データ
+     * @return View ビュー
      */
     public function index(): View
     {
@@ -47,11 +44,10 @@ class CustomersController extends Controller
     }
 
     /**
-     * 検索の値を取得し、検索します。
-     * 条件は4つです。
+     * 検索の値を取得し、検索
      *
      * @param CustomerSearchRequest $request リクエスト
-     * @return View
+     * @return View ビュー
      */
     public function search(CustomerSearchRequest $request): View
     {
@@ -87,10 +83,10 @@ class CustomersController extends Controller
     }
 
     /**
-     * 顧客詳細を表示します。
+     * 顧客詳細を表示
      *
      * @param $id 顧客ID
-     * @return View
+     * @return View ビュー
      */
     public function detail($id): View
     {
@@ -99,7 +95,7 @@ class CustomersController extends Controller
     }
 
     /**
-     * 顧客詳細から顧客データを消します。
+     * 顧客詳細から顧客データを削除
      *
      * @param $id 顧客ID
      * @return RedirectResponse リダイレクト
@@ -113,9 +109,9 @@ class CustomersController extends Controller
     }
 
     /**
-     * 顧客データを生成します。
+     * 顧客データを生成
      *
-     * @return View
+     * @return View ビュー
      */
     public function create(): View
     {
@@ -124,7 +120,7 @@ class CustomersController extends Controller
     }
 
     /**
-     * 顧客データの保存処理をします。
+     * 顧客データの保存処理
      *
      * @param CustomerRequest $request リクエスト
      * @return RedirectResponse レスポンス
@@ -145,10 +141,10 @@ class CustomersController extends Controller
     }
 
     /**
-     * 顧客データを編集します。
+     * 顧客データを編集
      *
      * @param $id 顧客ID
-     * @return View
+     * @return View ビュー
      */
     public function edit($id): View
     {
@@ -158,7 +154,7 @@ class CustomersController extends Controller
         return view('edit', ['customers' => $customers], ['prefs' => $prefs]);
     }
     /**
-     * 編集した顧客データをアップデートします。
+     * 編集した顧客データをアップデート
      *
      * @param CustomerUpdateRequest $request リクエスト
      * @return RedirectResponse レスポンス
@@ -176,17 +172,5 @@ class CustomersController extends Controller
         });
 
         return redirect()->route('customers.index');
-    }
-
-    /**
-     * 市区町村テーブルのデータをjsonで渡します。
-     *
-     * @param Request $request 都道府県ID
-     * @return JsonResponse レスポンス
-     */
-    public function prefSelect(Request $request): JsonResponse
-    {
-        $city = City::where('pref_id', '=', $request->pref_id)->get();
-        return response()->json($city);
     }
 }

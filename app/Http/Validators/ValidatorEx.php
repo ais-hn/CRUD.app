@@ -11,7 +11,7 @@ use Illuminate\Validation\Validator;
  * 拡張Validatorクラスです。
  *
  * @author Satoshi Nagashiba <bobtabo.buhibuhi@gmail.com>
- * @package App\Http\Validation
+ * @package App\Http\Validators
  */
 class ValidatorEx extends Validator
 {

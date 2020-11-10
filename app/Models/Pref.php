@@ -2,7 +2,7 @@
 /**
  *顧客テーブルのモデル。
  */
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 /**
  * 都道府県Modelのクラスです。
  *
- * @package App
+ * @package App\Models
  */
 class Pref extends Model
 {
