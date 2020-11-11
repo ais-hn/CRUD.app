@@ -1,13 +1,14 @@
 <?php
 /**
- * 顧客テーブルの削除日時の追加テーブル。
+ * 顧客テーブルの削除日時の追加テーブル
  */
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * 顧客テーブルにソフトデリートを追加。
+ * 顧客ソフトデリートModelクラス
  */
 class AddDeletedAtToCustomersTable extends Migration
 {

@@ -1,13 +1,13 @@
 <?php
 /**
- * 都道府県テーブルのSeeder。
+ * 都道府県テーブルSeeder
  */
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 /**
- * 都道府県テーブルのSeederクラス。
+ * 都道府県テーブルSeederクラス
  */
 class PrefsTableSeeder extends Seeder
 {

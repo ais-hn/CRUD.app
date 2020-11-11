@@ -1,12 +1,13 @@
 <?php
 /**
- * 市区町村テーブルのSeeder。
+ * 市区町村テーブルのSeeder
  */
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 /**
- * 市区町村テーブルSeederのクラス。
+ * 市区町村テーブルSeederクラス
  */
 class CitiesTableSeeder extends Seeder
 {

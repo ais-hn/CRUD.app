@@ -1,13 +1,14 @@
 <?php
 /**
- * 都道府県テーブルのマイグレーション。
+ * 都道府県テーブルのマイグレーション
  */
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * 都道府県テーブルMigrationのクラス。
+ * 都道府県Migrationのクラス
  */
 class CreatePrefsTable extends Migration
 {

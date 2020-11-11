@@ -4,26 +4,15 @@
  */
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\AppRequest;
 
 /**
  * 顧客作成のRequetクラス
  *
  * @package App\Http\Requests
  */
-class CustomerRequest extends FormRequest
+class CustomerRequest extends AppRequest
 {
-    /**
-     * リクエストに対する権限設定。
-     *
-     * @package App\Http\Requests
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
     /**
      * 顧客作成のバリデーション。
      *
@@ -45,7 +34,7 @@ class CustomerRequest extends FormRequest
             'buildding' => 'max:80',
             'tel' => 'required','regex:/^0\d{1,3}-\d{1,4}-\d{4}$/',
             'mobile' => 'required','regex:/^(070|080|090)-\d{4}-\d{4}$/',
-            'email' => 'required|email|unique:customers|max:80'
+            'email' => 'required|email|max:80|unique:customers'
         ];
     }
 }

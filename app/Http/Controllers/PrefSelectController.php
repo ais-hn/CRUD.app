@@ -18,7 +18,7 @@ class PrefSelectController extends Controller
     /**
      * 市区町村テーブルのデータをjsonで渡します。
      *
-     * @param Request $request 都道府県ID
+     * @param Request $request リクエスト
      * @return JsonResponse レスポンス
      */
     public function prefSelect(Request $request): JsonResponse

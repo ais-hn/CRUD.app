@@ -1,24 +1,18 @@
 <?php
 /**
- * 顧客編集のフォームリクエスト。
+ * 顧客編集のフォームリクエスト
  */
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\AppRequest;
 
-class CustomerUpdateRequest extends FormRequest
+/**
+ * 顧客更新Requestクラス
+ *
+ * @package App\Http\Requests
+ */
+class CustomerUpdateRequest extends AppRequest
 {
-    /**
-     * リクエストに対する権限設定。
-     *
-     * @package App\Http\Requests
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
     /**
      * 顧客編集のバリデーション。
      *
@@ -33,13 +27,14 @@ class CustomerUpdateRequest extends FormRequest
             'first_kana' => 'required|max:50',
             'gender' => 'required',
             'birthday' => 'required|date',
+            'post_code' => 'regex:/^[0-9]{3}-[0-9]{4}$/',
             'pref_id' => 'required',
             'city_id' => 'required',
-            'address' => 'required|max:80','regex:/^[0-9]{3}-[0-9]{4}$/',
+            'address' => 'required|max:80',
             'buildding' => 'max:80',
             'tel' => 'required','regex:/^0\d{1,3}-\d{1,4}-\d{4}$/',
             'mobile' => 'required','regex:/^(070|080|090)-\d{4}-\d{4}$/',
-            'email' => 'required|email|unique_email|max:80'
+            'email' => 'required|email|max:80|unique_email'
         ];
     }
     /**

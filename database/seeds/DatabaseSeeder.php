@@ -1,13 +1,14 @@
 <?php
 /**
- * DBのSeeder。
+ * DBのSeeder
  */
+
 use Illuminate\Database\Seeder;
 
 /**
- * DBのSeederのクラス。
+ * DBSeederクラス
  *
- * @package Seeds
+ * @package Seeder
  */
 class DatabaseSeeder extends Seeder
 {

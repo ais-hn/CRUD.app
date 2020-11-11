@@ -14,7 +14,7 @@ use DB;
 use Illuminate\Http\RedirectResponse;
 
 /**
- * 顧客Controllerのクラス
+ * 顧客Controllerクラス
  *
  * @author hanayama <01.hanayama@gmail.com>
  * @package App\Http\Controllers
@@ -129,8 +129,6 @@ class CustomersController extends Controller
     {
         $input = $request->input();
 
-        unset($input['_token']);
-
         DB::transaction(function () use ($input) {
             $customer = new Customer();
             $customer->fill($input)->save();
@@ -163,8 +161,6 @@ class CustomersController extends Controller
     {
 
         $input = $request->input();
-
-        unset($input['_token']);
 
         DB::transaction(function () use ($input) {
             $customer = Customer::findOrFail($input['id']);

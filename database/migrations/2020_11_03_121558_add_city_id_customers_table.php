@@ -1,18 +1,19 @@
 <?php
 /**
- * 顧客テーブルの市区町村カラムの追加マイグレーション。
+ * 顧客テーブルの市区町村カラムの追加マイグレーション
  */
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * 市区町村カラムの追加Midrationのクラス。
+ * 市区町村追加カラムidrationのクラス
  */
 class AddCityIdCustomersTable extends Migration
 {
     /**
-     * 顧客テーブルに市区町村IDを追加。
+     * Run the migrations.
      *
      * @return void
      */
