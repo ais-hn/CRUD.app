@@ -4,9 +4,10 @@
  */
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\City;
 use Illuminate\Http\JsonResponse;
+use App\Http\Requests\AppRequest;
 
 /**
  * 市区町村テーブル取得するControllerのクラス
@@ -18,10 +19,10 @@ class PrefSelectController extends Controller
     /**
      * 市区町村テーブルのデータをjsonで渡します。
      *
-     * @param Request $request リクエスト
+     * @param AppRequest $request リクエスト
      * @return JsonResponse レスポンス
      */
-    public function prefSelect(Request $request): JsonResponse
+    public function prefSelect(AppRequest $request): JsonResponse
     {
         $city = City::where('pref_id', '=', $request->pref_id)->get();
         return response()->json($city);

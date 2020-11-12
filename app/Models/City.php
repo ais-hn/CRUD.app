@@ -24,6 +24,6 @@ class City extends Model
      */
     public function pref()
     {
-        return $this->belongsTo('App\Pref');
+        return $this->belongsTo('App\Models\Pref');
     }
 }

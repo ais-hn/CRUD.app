@@ -4,6 +4,7 @@
  */
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Pref;
 use App\Http\Requests\CustomerRequest;
@@ -12,6 +13,7 @@ use App\Http\Requests\CustomerSearchRequest;
 use Illuminate\View\View;
 use DB;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 /**
  * 顧客Controllerクラス

@@ -36,7 +36,7 @@
 
                 var request = $.ajax({
                     type: "GET",
-                    url: "{{ route('pref.select' }}",
+                    url: "{{ route('pref.select', ['pref_id' => $customers->pref_id]) }}",
                     data: {
                         "pref_id" : prefId
                     }

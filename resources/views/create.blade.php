@@ -107,7 +107,6 @@
                         <div class="col-md-2 mb-3">
                             <label for="city_id">市区町村 <span class="badge badge-danger">必須</span></label>
                             <select  id="city_id" class="custom-select d-block w-100" name="city_id" required>
-                                <option value="" selected></option>
                             </select>
                         </div>
                     </div>
@@ -188,8 +187,6 @@
     $("#pref_id").change(function() {
         setCities($("#pref_id").val());
     });
-
-
 
     $("#complete").click(function() {
         completeConfirm(function(result){
