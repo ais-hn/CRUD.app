@@ -13,7 +13,6 @@ use App\Http\Requests\CustomerSearchRequest;
 use Illuminate\View\View;
 use DB;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 /**
  * 顧客Controllerクラス
@@ -31,7 +30,7 @@ class CustomersController extends Controller
      */
     public function index(): View
     {
-        $customers = Customer::all();
+        $customers = Customer::paginate(config('crud.app.customers_list'));
 
         $prefs = Pref::all();
 

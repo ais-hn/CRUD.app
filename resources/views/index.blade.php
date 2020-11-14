@@ -142,6 +142,9 @@
 
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-left">
+                    {{ $customers->links() }}
+                </div>
             </div>
 
         </div>
