@@ -1,35 +1,36 @@
 <?php
 /**
- * CRUDアプリのコントローラー。
+ * 顧客コントローラー
  */
 namespace App\Http\Controllers;
 
-use App\Customer;
-use App\Pref;
+use App\Http\Controllers\Controller;
+use App\Models\Customer;
+use App\Models\Pref;
 use App\Http\Requests\CustomerRequest;
 use App\Http\Requests\CustomerUpdateRequest;
 use App\Http\Requests\CustomerSearchRequest;
 use Illuminate\View\View;
 use DB;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 /**
- * 顧客Controllerのクラス
+ * 顧客Controllerクラス
  *
  * @author hanayama <01.hanayama@gmail.com>
+ * @package App\Http\Controllers
  */
 class CustomersController extends Controller
 {
     /**
-     * 検索一覧を表示します。
+     * 検索一覧を表示
      *
-     * @var $input 検索フォームの初期表示として使用。
-     *
-     * @return view
+     * @param $input 入力データ
+     * @return View ビュー
      */
-    public function index(): view
+    public function index(): View
     {
-
         $customers = Customer::all();
 
         $prefs = Pref::all();
@@ -45,13 +46,12 @@ class CustomersController extends Controller
     }
 
     /**
-     * 検索の値を取得し、検索します。
+     * 検索の値を取得し、検索
      *
      * @param CustomerSearchRequest $request リクエスト
-     *
-     * @return view
+     * @return View ビュー
      */
-    public function search(CustomerSearchRequest $request): view
+    public function search(CustomerSearchRequest $request): View
     {
         $prefs = Pref::all();
 
@@ -59,17 +59,12 @@ class CustomersController extends Controller
 
         $query = Customer::query();
 
-        //条件1
         if (!empty($input['last_kana'])) {
             $query->where('last_kana', 'like', '%'.$input['last_kana'].'%');
         }
-
-        //条件2
         if (!empty($input['first_kana'])) {
             $query->where('first_kana', 'like', '%'.$input['first_kana'].'%');
         }
-
-        //条件3
         if (!empty($input['gender1']) || !empty($input['gender2'])) {
             $genders = [];
             if (!empty($input['gender1'])) {
@@ -80,8 +75,6 @@ class CustomersController extends Controller
             }
             $query->whereIn('gender', $genders);
         }
-
-        //条件4
         if (!empty($input['pref_id'])) {
             $query->where('pref_id', $input['pref_id']);
         }
@@ -92,24 +85,22 @@ class CustomersController extends Controller
     }
 
     /**
-     * 顧客詳細を表示します。
+     * 顧客詳細を表示
      *
-     * @param $id idパラメーター
-     *
-     * @return view
+     * @param $id 顧客ID
+     * @return View ビュー
      */
-    public function detail($id): view
+    public function detail($id): View
     {
         $customers = Customer::findOrFail($id);
         return view('detail', ['customers' => $customers]);
     }
 
     /**
-     * 顧客詳細から顧客データを消します。
+     * 顧客詳細から顧客データを削除
      *
-     * @param $id idパラメーター
-     *
-     * @return RedirectResponce
+     * @param $id 顧客ID
+     * @return RedirectResponse リダイレクト
      */
     public function destroy($id): RedirectResponse
     {
@@ -120,47 +111,42 @@ class CustomersController extends Controller
     }
 
     /**
-     * 顧客データを生成します。
+     * 顧客データを生成
      *
-     * @return view
+     * @return View ビュー
      */
-    public function create(): view
+    public function create(): View
     {
         $prefs = Pref::all();
         return view('create', ['prefs' => $prefs]);
     }
 
     /**
-     * 顧客データの保存処理をします。
+     * 顧客データの保存処理
      *
      * @param CustomerRequest $request リクエスト
-     *
-     * @return RedirectResponce
+     * @return RedirectResponse レスポンス
      */
     public function store(CustomerRequest $request): RedirectResponse
     {
         $input = $request->input();
 
-        unset($input['_token']);
-
         DB::transaction(function () use ($input) {
             $customer = new Customer();
             $customer->fill($input)->save();
-            }
-        );
+        });
 
         return redirect()->route('customers.index')
             ->with('signup_message', '登録しました。');
     }
 
     /**
-     * 顧客データを編集します。
+     * 顧客データを編集
      *
-     * @param $id パラメーターid
-     *
-     * @return view
+     * @param $id 顧客ID
+     * @return View ビュー
      */
-    public function edit($id): view
+    public function edit($id): View
     {
         $customers = Customer::findOrFail($id);
         $prefs = Pref::all();
@@ -168,24 +154,20 @@ class CustomersController extends Controller
         return view('edit', ['customers' => $customers], ['prefs' => $prefs]);
     }
     /**
-     * 編集した顧客データをアップデートします。
+     * 編集した顧客データをアップデート
      *
      * @param CustomerUpdateRequest $request リクエスト
-     *
-     * @return RedirectResponce
+     * @return RedirectResponse レスポンス
      */
     public function update(CustomerUpdateRequest $request): RedirectResponse
     {
 
         $input = $request->input();
 
-        unset($input['_token']);
-
         DB::transaction(function () use ($input) {
             $customer = Customer::findOrFail($input['id']);
             $customer->fill($input)->save();
-            }
-        );
+        });
 
         return redirect()->route('customers.index');
     }

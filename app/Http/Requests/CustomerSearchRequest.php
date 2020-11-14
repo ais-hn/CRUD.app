@@ -5,23 +5,15 @@
  */
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\AppRequest;
 
 /**
- * 顧客検索のRequestクラス。
+ * 顧客検索Requestクラス。
+ *
+ * @package App\Http\Requests
  */
-class CustomerSearchRequest extends FormRequest
+class CustomerSearchRequest extends AppRequest
 {
-    /**
-     * リクエストに対する権限設定。
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
     /**
      * 検索一覧のバリデーション。
      *

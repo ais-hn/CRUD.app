@@ -1,21 +1,20 @@
 <?php
 /**
- * 顧客テーブルのモデル。
+ * 市区町村テーブルのモデル。
  */
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 /**
- * 顧客Modelのクラス。
+ * 市区町村Modelのクラス。
  *
- * @var $dates 日付ミューテーターを使用します。
+ * @package App\Models
  */
-class Customer extends Model
+class City extends Model
 {
     protected $guarded = ['id'];
-    protected $dates = ['birthday','created_at','updated_at'];
+    protected $date = ['created_at', 'updated_at'];
 
     /**
      * 都道府県テーブルとのリレーション。
@@ -25,6 +24,6 @@ class Customer extends Model
      */
     public function pref()
     {
-        return $this->belongsTo('App\Pref');
+        return $this->belongsTo('App\Models\Pref');
     }
 }

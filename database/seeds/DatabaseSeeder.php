@@ -1,13 +1,14 @@
 <?php
 /**
- * DBのSeeder。
+ * DBのSeeder
  */
-namespace Seeds;
 
 use Illuminate\Database\Seeder;
 
 /**
- * DBのSeederのクラス。
+ * DBSeederクラス
+ *
+ * @package Seeder
  */
 class DatabaseSeeder extends Seeder
 {
@@ -19,5 +20,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(PrefsTableSeeder::class);
+        $this->call(CitiesTableSeeder::class);
     }
 }

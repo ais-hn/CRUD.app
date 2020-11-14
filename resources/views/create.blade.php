@@ -92,13 +92,21 @@
                         {{--都道府県--}}
                         <div class="col-md-2 mb-3">
                             <label for="pref_id">都道府県 <span class="badge badge-danger">必須</span></label>
-                            <select class="custom-select d-block w-100" name="pref_id" required>
+                            <select id="pref_id" class="custom-select d-block w-100" name="pref_id" required>
                                 @foreach($prefs as $pref)
                                 <option value="{{ $pref->id }}" {{ ($pref->id == old('pref_id')) ? "selected" : "" }}>
                                     {{ $pref->name }}
                                 </option>
                                 @endforeach
+                            </select>
+                        </div>
+                    </div>
 
+                    <div class="row">
+                        {{--市区町村--}}
+                        <div class="col-md-2 mb-3">
+                            <label for="city_id">市区町村 <span class="badge badge-danger">必須</span></label>
+                            <select  id="city_id" class="custom-select d-block w-100" name="city_id" required>
                             </select>
                         </div>
                     </div>
@@ -164,6 +172,7 @@
             </div>
         </div>
     </main>
+
     {{--確認メッセージ表示--}}
     <div id="complete-confirm" title="確認" style="display: none;">
         <p><span class="ui-icon ui-icon-info" style="float:left; margin:12px 12px 20px 0;"></span>登録しますか？</p>
@@ -172,14 +181,21 @@
 
 @section('javascript')
 
-$("#complete").click(function() {
-    completeConfirm(function(result){
-        if (result) {
-            $("form").submit();
-        }
+    $(function() {
+        setCities($("#pref_id").val());
     });
-});
+    $("#pref_id").change(function() {
+        setCities($("#pref_id").val());
+    });
 
-@include('layouts.submit', 'btn' => '登録')
+    $("#complete").click(function() {
+        completeConfirm(function(result){
+            if (result) {
+                $("form").submit();
+            }
+        });
+    });
+
+@include('layouts.submit', ['btn' => '登録'])
 
 @endsection

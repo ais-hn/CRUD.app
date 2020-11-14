@@ -132,13 +132,13 @@
 @endsection
 
 @section('javascript')
-$("#complete").click(function() {
-    completeConfirm(function(result){
-        if (result) {
-            location.replace("{{ route('customers.destroy',['id' => $customers->id]) }} ");
-        }
+    $("#complete").click(function() {
+        completeConfirm(function(result){
+            if (result) {
+                location.replace("{{ route('customers.destroy',['id' => $customers->id]) }} ");
+            }
+        });
     });
-});
 
 @include('layouts.submit', ['btn' => '削除'])
 
