@@ -4,7 +4,6 @@
  */
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Pref;
 use App\Http\Requests\CustomerRequest;
