@@ -5,7 +5,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\City;
+use City;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\AppRequest;
 
@@ -24,7 +24,7 @@ class PrefSelectController extends Controller
      */
     public function prefSelect(AppRequest $request): JsonResponse
     {
-        $city = City::where('pref_id', '=', $request->pref_id)->get();
+        $city = City::getList($request->pref_id);
         return response()->json($city);
     }
 }

@@ -5,14 +5,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Customer;
-use App\Models\Pref;
+use Customer;
+use Pref;
 use App\Http\Requests\CustomerRequest;
 use App\Http\Requests\CustomerUpdateRequest;
 use App\Http\Requests\CustomerSearchRequest;
 use Illuminate\View\View;
 use DB;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 /**
  * 顧客Controllerクラス
@@ -30,14 +31,16 @@ class CustomersController extends Controller
      */
     public function index(): View
     {
-        $customers = Customer::paginate(config('crud.app.customers_list'));
+        $customers = Customer::getList();
 
-        $prefs = Pref::all();
+        $prefs = Pref::getList();
 
         $input = [
             'last_kana' => '',
             'first_kana' => '',
-            'pref_id' => ''
+            'gender1' => null,
+            'gender2' => null,
+            'pref_id' => null,
         ];
 
         return view('index', ['customers' => $customers], ['prefs' => $prefs])
@@ -52,33 +55,11 @@ class CustomersController extends Controller
      */
     public function search(CustomerSearchRequest $request): View
     {
-        $prefs = Pref::all();
+        $prefs = Pref::getList();
 
         $input = $request->input();
 
-        $query = Customer::query();
-
-        if (!empty($input['last_kana'])) {
-            $query->where('last_kana', 'like', '%'.$input['last_kana'].'%');
-        }
-        if (!empty($input['first_kana'])) {
-            $query->where('first_kana', 'like', '%'.$input['first_kana'].'%');
-        }
-        if (!empty($input['gender1']) || !empty($input['gender2'])) {
-            $genders = [];
-            if (!empty($input['gender1'])) {
-                $genders[] = $input['gender1'];
-            }
-            if (!empty($input['gender2'])) {
-                $genders[] = $input['gender2'];
-            }
-            $query->whereIn('gender', $genders);
-        }
-        if (!empty($input['pref_id'])) {
-            $query->where('pref_id', $input['pref_id']);
-        }
-
-        $customers = $query->get();
+        $customers = Customer::getList($input);
 
         return view('index', ['customers' => $customers], ['prefs' => $prefs])->with('input', $input);
     }
@@ -89,9 +70,9 @@ class CustomersController extends Controller
      * @param $id 顧客ID
      * @return View ビュー
      */
-    public function detail($id): View
+    public function detail(Request $request): View
     {
-        $customers = Customer::findOrFail($id);
+        $customers = Customer::get($request->id);
         return view('detail', ['customers' => $customers]);
     }
 
@@ -101,10 +82,11 @@ class CustomersController extends Controller
      * @param $id 顧客ID
      * @return RedirectResponse リダイレクト
      */
-    public function destroy($id): RedirectResponse
+    public function destroy(Request $request): RedirectResponse
     {
-        $customers = Customer::findOrFail($id);
-        $customers->delete();
+        DB::transaction(function () use ($request) {
+            Customer::delete($request->id);
+        });
 
         return redirect()->route('customers.index');
     }
@@ -116,7 +98,7 @@ class CustomersController extends Controller
      */
     public function create(): View
     {
-        $prefs = Pref::all();
+        $prefs = Pref::getList();
         return view('create', ['prefs' => $prefs]);
     }
 
@@ -128,11 +110,8 @@ class CustomersController extends Controller
      */
     public function store(CustomerRequest $request): RedirectResponse
     {
-        $input = $request->input();
-
-        DB::transaction(function () use ($input) {
-            $customer = new Customer();
-            $customer->fill($input)->save();
+        DB::transaction(function () use ($request) {
+            Customer::save($request->input());
         });
 
         return redirect()->route('customers.index')
@@ -147,8 +126,8 @@ class CustomersController extends Controller
      */
     public function edit($id): View
     {
-        $customers = Customer::findOrFail($id);
-        $prefs = Pref::all();
+        $customers = Customer::get($id);
+        $prefs = Pref::getList();
 
         return view('edit', ['customers' => $customers], ['prefs' => $prefs]);
     }
@@ -160,12 +139,8 @@ class CustomersController extends Controller
      */
     public function update(CustomerUpdateRequest $request): RedirectResponse
     {
-
-        $input = $request->input();
-
-        DB::transaction(function () use ($input) {
-            $customer = Customer::findOrFail($input['id']);
-            $customer->fill($input)->save();
+        DB::transaction(function () use ($request) {
+            Customer::save($request->input(), $request->id);
         });
 
         return redirect()->route('customers.index');
