@@ -19,7 +19,6 @@
 
                 {{--検索項目フォーム--}}
                 <form id="form" method="get" action="{{ route('customers.search') }}">
-
                     <div class="row">
                         <div class="col-md-6">
 
@@ -27,7 +26,7 @@
                             <div class="form-group row">
                                 <label for="lastKana" class="col-sm-2 col-form-label">姓かな</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="last_kana" placeholder="姓かな" value="{{ $input['last_kana'] }}">
+                                    <input type="text" class="form-control" name="last_kana" placeholder="姓かな" value="{{ old('last_kana', $input['last_kana']) }}">
                                 </div>
                             </div>
 
@@ -35,7 +34,7 @@
                             <div class="form-group row">
                                 <label for="firstKana" class="col-sm-2 col-form-label">名かな</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="first_kana" placeholder="名かな" value="{{ $input['first_kana'] }}">
+                                    <input type="text" class="form-control" name="first_kana" placeholder="名かな" value="{{ old('first_kana', $input['first_kana']) }}">
                                 </div>
                             </div>
 
@@ -90,6 +89,7 @@
             </div>
 
             <div class="row">
+                @if ($customers->isNotEmpty())
                 <table class="table table-bordered table-hover">
                     <thead class="thead-dark">
                         <tr>
@@ -143,8 +143,9 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-left">
-                    {{ $customers->links() }}
+                    {{ $customers->appends(request()->query())->links() }}
                 </div>
+                @endif
             </div>
 
         </div>

@@ -4,18 +4,15 @@
  */
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\AppModel;
 
 /**
  * 市区町村Modelのクラス。
  *
  * @package App\Models
  */
-class City extends Model
+class City extends AppModel
 {
-    protected $guarded = ['id'];
-    protected $date = ['created_at', 'updated_at'];
-
     /**
      * 都道府県テーブルとのリレーション。
      * 都道府県テーブルのIDと顧客テーブルのpref_idを紐付け。

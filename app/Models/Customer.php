@@ -4,8 +4,8 @@
  */
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\AppModel;
 
 /**
  * 顧客Modelのクラス。
@@ -13,11 +13,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @package App\Models
  */
-class Customer extends Model
+class Customer extends AppModel
 {
     use SoftDeletes;
 
-    protected $guarded = ['id'];
     protected $dates = ['birthday','created_at','updated_at','deleted_at'];
 
     /**
