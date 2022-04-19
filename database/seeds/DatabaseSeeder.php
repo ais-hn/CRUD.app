@@ -1,17 +1,25 @@
 <?php
+/**
+ * DBのSeeder
+ */
 
 use Illuminate\Database\Seeder;
 
+/**
+ * DBSeederクラス
+ *
+ * @package Seeder
+ */
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * PrefsTableSeederで初期の都道府県を呼び込む。
      *
      * @return void
      */
     public function run()
     {
-        //prefsのseederで初期の都道府県を呼び込む。
         $this->call(PrefsTableSeeder::class);
+        $this->call(CitiesTableSeeder::class);
     }
 }
